@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
+import TabletWrapper from "@/components/TabletWrapper";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 
@@ -11,7 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>{children}</body>
+      <body className={roboto.variable}>
+        <TabletWrapper>{children}</TabletWrapper>
+      </body>
     </html>
   );
 }
