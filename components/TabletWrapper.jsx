@@ -6,7 +6,7 @@ const TabletWrapper = ({ children }) => {
       <div
         className="
           m-4 sm:m-0
-          h-[90vh] w-[90vw] sm:h-[80vh] sm:w-[80vw]
+          h-[82vh] w-[85vw] sm:h-[85vh] sm:w-[85vw]
           bg-black border-2 sm:border-4 rounded-2xl border-tablet-border 
           flex items-center justify-center p-2 sm:p-4 
           shadow-[0_12px_20px_rgba(0,0,0,0.9)]
