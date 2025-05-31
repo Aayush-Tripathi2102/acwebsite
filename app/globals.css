@@ -33,6 +33,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "VCR_OSD_MONO", monospace;
-  margin: 0;
-  padding: 0;
 }
