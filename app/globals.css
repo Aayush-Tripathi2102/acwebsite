@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @font-face {
   font-family: "VCR_OSD_MONO";
   src: url("/font/VCR_OSD_MONO_1.001.ttf") format("truetype");
@@ -17,12 +18,12 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-terminal-primary: var(--terminal-primary);
-  --color-tablet-border:var(--tablet-border)
+  --color-tablet-border: var(--tablet-border);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #191919;
+    --background: #21242f;
     --foreground: #ededed;
     --terminal-primary: #1eff00;
     --tablet-border: #8c8f98;
@@ -32,5 +33,15 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "VCR_OSD_MONO", monospace;
+}
+
+@layer components {
+  .text-vcr {
+    font-family: "VCR_OSD_MONO", monospace;
+  }
+
+  .terminal-text {
+    font-family: "VCR_OSD_MONO", monospace;
+    @apply text-terminal-primary text-lg drop-shadow-[0_0_10px_#1EFF00];
+  }
 }
