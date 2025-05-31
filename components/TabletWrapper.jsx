@@ -5,18 +5,21 @@ const TabletWrapper = ({ children }) => {
     <div className="min-h-screen min-w-screen flex items-center justify-center bg-[#191919]">
       <div
         className="
-          h-[90vh] w-[90vw] bg-black border-4 rounded-2xl border-tablet-border 
-          flex items-center justify-center p-4 
+          m-4 sm:m-0
+          h-[95vh] w-[95vw] sm:h-[90vh] sm:w-[90vw]
+          bg-black border-2 sm:border-4 rounded-2xl border-tablet-border 
+          flex items-center justify-center p-2 sm:p-4 
           shadow-[0_12px_20px_rgba(0,0,0,0.9)]
         "
       >
         <div
           className="
-            h-full w-full bg-black rounded-xl border-[6px] border-black
+            h-full w-full bg-black rounded-xl 
+            border-[3px] sm:border-[6px] border-black
             shadow-[inset_0_6px_12px_rgba(0,0,0,0.9)]
           "
         >
-          <div className="bg-white h-full w-full border-0 rounded-2xl p-2">
+          <div className="bg-white h-full w-full border-0 rounded-xl p-1 sm:p-2">
             {children}
           </div>
         </div>
