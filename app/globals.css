@@ -17,6 +17,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-terminal-primary: var(--terminal-primary);
+  --color-tablet-border:var(--tablet-border)
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +25,7 @@
     --background: #191919;
     --foreground: #ededed;
     --terminal-primary: #1eff00;
+    --tablet-border: #8c8f98;
   }
 }
 
@@ -31,4 +33,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "VCR_OSD_MONO", monospace;
+  margin: 0;
+  padding: 0;
 }
