@@ -1,3 +1,5 @@
+import Terminal from "@/components/terminal/Terminal";
+
 export default function Home() {
   return (
     <div className="h-full w-full p-2">
@@ -9,7 +11,7 @@ export default function Home() {
 
         {/* Terminal - appears second on mobile, first column on desktop */}
         <div className="col-span-2 row-span-3 row-start-2 md:col-span-2 md:row-span-5 md:row-start-1 border-2 border-black bg-gray-100 p-4">
-          Terminal
+          <Terminal />
         </div>
 
         {/* Apps - appears third on both layouts */}
