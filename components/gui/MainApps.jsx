@@ -1,35 +1,34 @@
 import React from "react";
-import { motion } from "motion/react";
-import Link from "next/link";
+
+const Apps = [
+  { src: "/gui/InstagramIcon.png", alt: "Instagram", href: "https://instagram.com" },
+  { src: "/gui/LinkedInIcon.png", alt: "LinkedIn", href: "https://linkedin.com" },
+  { src: "/gui/AboutIcon.png", alt: "About", href: "/about" },
+  { src: "/gui/MailIcon.png", alt: "Mail", href: "/about" },
+  { src: "/gui/GalleryIcon.png", alt: "Gallery", href: "/about" },
+  { src: "/gui/TeamsIcon.png", alt: "Teams", href: "/about" },
+  { src: "/gui/EmptyIcon.png", alt: "Empty 1", href: "/about" },
+  { src: "/gui/EmptyIcon.png", alt: "Empty 2", href: "/about" },
+];
 
 const MainApps = () => {
-  const imagePaths = [
-    "/gui/InstagramIcon.png",
-    "/gui/EmptyIcon.png",
-    "/gui/EmptyIcon.png",
-    "/gui/LinkedInIcon.png",
-    "/gui/AboutIcon.png",
-    "/gui/MailIcon.png",
-    "/gui/GalleryIcon.png",
-    "/gui/TeamsIcon.png",
-  ];
-
   return (
-    <div className="flex justify-center items-center h-full w-full">
-      <div className="grid grid-cols-4 w-full">
-        {imagePaths.map((path, index) => (
-          <div
-            key={index}
-            className="w-full aspect-square flex items-center justify-center bg-transparent xl:p-7 lg:p-4 md:p-8 sm:p-6 p-3 "
+    <div className="w-full h-full p-4">
+      <div className="grid grid-cols-4 sm:grid-cols-4 gap-4 place-items-center h-full w-full">
+        {Apps.map((icon, i) => (
+          <a
+            key={i}
+            href={icon.href}
+            className="w-16 h-16 flex items-center justify-center p-3 md:p-0 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95 hover:shadow-md cursor-pointer rounded-xl"
+            target={icon.href.startsWith("http") ? "_blank" : "_parent"}
+            rel={icon.href.startsWith("http") ? "noopener noreferrer" : undefined}
           >
-            <Link href="/about">
-              <img
-                src={path}
-                alt={`App ${index + 1}`}
-                className="w-3/4 h-3/4 object-contain hover-"
-              />
-            </Link>
-          </div>
+            <img
+              src={icon.src}
+              alt={icon.alt}
+              className="w-12 h-12 object-contain cursor-pointer"
+            />
+          </a>
         ))}
       </div>
     </div>
