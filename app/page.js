@@ -5,24 +5,42 @@ import SearchBar from "@/components/gui/SearchBar";
 import Terminal from "@/components/terminal/Terminal";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import useIsLargeScreen from "@/hooks/useIsLargeScreen"; // import the hook
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const isLargeScreen = useIsLargeScreen(); // get screen size
 
   const transitionSettings = {
     duration: 0.4,
     ease: "easeInOut",
   };
 
+  const searchOnlyAnimation = {
+    initial: {
+      scale: 0.9,
+      opacity: 0,
+      x: isLargeScreen ? 100 : 0,
+    },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      x: 0,
+    },
+    exit: {
+      scale: 0.9,
+      opacity: 0,
+      x: isLargeScreen ? 100 : 0,
+    },
+  };
+
   return (
-    <div className="h-full w-full p-2 flex  justify-center overflow-hidden">
+    <div className="h-full w-full p-2 flex justify-center overflow-hidden">
       <AnimatePresence mode="wait">
         {isOpen ? (
           <motion.div
             key="searchOnly"
-            initial={{ scale: 0.9, opacity: 0, x: 100 }}
-            animate={{ scale: 1, opacity: 1, x: 0 }}
-            exit={{ scale: 0.9, opacity: 0, x: 100 }}
+            {...searchOnlyAnimation}
             transition={transitionSettings}
             className="w-full max-w-2xl"
           >
