@@ -1,24 +1,59 @@
+"use client";
+
+import AppSection from "@/components/gui/AppSection";
+import SearchBar from "@/components/gui/SearchBar";
 import Terminal from "@/components/terminal/Terminal";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const transitionSettings = {
+    duration: 0.4,
+    ease: "easeInOut",
+  };
+
   return (
-    <div className="h-full w-full p-2">
-      <div className="grid grid-cols-2 grid-rows-8 md:grid-cols-5 md:grid-rows-5 gap-2 h-full">
-        {/* Search Bar - appears first on mobile, second column on desktop */}
-        <div className="col-span-2 row-span-1 md:col-span-3 md:col-start-3 md:row-span-1 border-2 border-black bg-gray-200 p-4">
-          SearchBar
-        </div>
+    <div className="h-full w-full p-2 flex  justify-center overflow-hidden">
+      <AnimatePresence mode="wait">
+        {isOpen ? (
+          <motion.div
+            key="searchOnly"
+            initial={{ scale: 0.9, opacity: 0, x: 100 }}
+            animate={{ scale: 1, opacity: 1, x: 0 }}
+            exit={{ scale: 0.9, opacity: 0, x: 100 }}
+            transition={transitionSettings}
+            className="w-full max-w-2xl"
+          >
+            <SearchBar setIsOpen={setIsOpen} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="fullLayout"
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={transitionSettings}
+            className="grid grid-cols-2 grid-rows-8 lg:grid-cols-5 lg:grid-rows-5 gap-2 w-full h-full"
+          >
+            {/* Search Bar */}
+            <div className="col-span-2 row-span-1 lg:col-span-3 lg:col-start-3 lg:row-span-1 h-full w-full flex items-center justify-center">
+              <SearchBar setIsOpen={setIsOpen} />
+            </div>
 
-        {/* Terminal - appears second on mobile, first column on desktop */}
-        <div className="col-span-2 row-span-3 row-start-2 md:col-span-2 md:row-span-5 md:row-start-1 border-2 border-black bg-gray-100 p-4">
-          <Terminal />
-        </div>
+            {/* Terminal */}
+            <div className="col-span-2 row-span-3 row-start-2 lg:col-span-2 lg:row-span-5 lg:row-start-1 border-2 border-black bg-gray-100 p-4">
+              <Terminal />
+            </div>
 
-        {/* Apps - appears third on both layouts */}
-        <div className="col-span-2 row-span-4 row-start-5 md:col-span-3 md:col-start-3 md:row-span-4 md:row-start-2 border-2 border-black bg-gray-300 p-4">
-          Apps
-        </div>
-      </div>
+            {/* App Section */}
+            <div className="col-span-2 row-span-4 row-start-5 lg:col-span-3 lg:col-start-3 lg:row-span-4 lg:row-start-2">
+              <AppSection />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
