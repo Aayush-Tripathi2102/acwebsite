@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ac-website": "file:",
     "framer-motion": "^12.15.0",
     "gsap": "^3.13.0",
     "motion": "^12.16.0",

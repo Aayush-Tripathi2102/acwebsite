@@ -43,7 +43,7 @@ export default function Home() {
             </div>
 
             {/* Terminal */}
-            <div className="col-span-2 row-span-3 row-start-2 lg:col-span-2 lg:row-span-5 lg:row-start-1 border-2 border-black bg-gray-100 p-4">
+            <div className="col-span-2 row-span-3 row-start-2 lg:col-span-2 lg:row-span-5 lg:row-start-1">
               <Terminal />
             </div>
 
