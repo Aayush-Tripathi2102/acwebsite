@@ -1,7 +1,7 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi";
 
-const SearchBar = ({ setIsOpen }) => {
+const SearchBar = () => {
   return (
     <div className="relative w-full  mx-2">
       {/* Search Icon */}
@@ -11,8 +11,6 @@ const SearchBar = ({ setIsOpen }) => {
 
       {/* Input Field */}
       <input
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
         type="text"
         placeholder="Search..."
         className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-2xl
