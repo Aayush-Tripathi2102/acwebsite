@@ -27,7 +27,7 @@ const MainApps = () => {
           <a
             key={i}
             href={icon.href}
-            className="w-16 h-16 flex items-center justify-center p-3 md:p-0 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95 hover:shadow-md cursor-pointer rounded-xl"
+            className="w-16 h-16 flex items-center justify-center p-2.5 md:p-0 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95 hover:shadow-md cursor-pointer rounded-xl"
             target={icon.href.startsWith("http") ? "_blank" : "_parent"}
             rel={
               icon.href.startsWith("http") ? "noopener noreferrer" : undefined
