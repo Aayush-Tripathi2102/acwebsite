@@ -1,6 +1,17 @@
+import Link from "next/link";
 import React from "react";
 
 const Apps = [
+  {
+    src: "/gui/InstagramIcon.png",
+    alt: "Instagram",
+    href: "https://instagram.com",
+  },
+  {
+    src: "/gui/LinkedInIcon.png",
+    alt: "LinkedIn",
+    href: "https://linkedin.com",
+  },
   {
     src: "/gui/InstagramIcon.png",
     alt: "Instagram",
@@ -24,7 +35,8 @@ const MainApps = () => {
     <div className="w-full h-full p-4">
       <div className="grid grid-cols-4 sm:grid-cols-4 gap-4 place-items-center h-full w-full">
         {Apps.map((icon, i) => (
-          <a
+          <Link
+            layoutId="main-apps"
             key={i}
             href={icon.href}
             className="w-16 h-16 flex items-center justify-center p-2.5 md:p-0 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95 hover:shadow-md cursor-pointer rounded-xl"
@@ -38,7 +50,7 @@ const MainApps = () => {
               alt={icon.alt}
               className="w-12 h-12 object-contain cursor-pointer"
             />
-          </a>
+          </Link>
         ))}
       </div>
     </div>
