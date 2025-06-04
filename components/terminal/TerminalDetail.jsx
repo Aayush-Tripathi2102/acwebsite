@@ -73,10 +73,6 @@ export default function TerminalDetail() {
 `}
         </pre>
       </div>
-
-      <h1 className="terminal-text text-[13px] font-[400px] px-[23px] mt-[30px]">
-        Hello it’s good to have you here
-      </h1>
     </motion.div>
   );
 }
