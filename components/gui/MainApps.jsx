@@ -1,7 +1,7 @@
 "use-client";
 import Link from "next/link";
 import React from "react";
-import { motion } from "framer-motion";
+import { animate, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 const Apps = [
   {
@@ -57,7 +57,7 @@ const MainApps = () => {
                 duration: 0.15,
                 type: "linear",
                 stiffness: 100,
-                damping: 25,
+                damping: 1125,
               }}
               layoutId={icon.layoutId}
               onClick={() => router.push(icon.href)}

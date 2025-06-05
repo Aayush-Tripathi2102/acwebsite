@@ -1,24 +1,29 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { FiSearch } from "react-icons/fi"; // React icon for search
+import { FiSearch } from "react-icons/fi";
 
 export default function SearchDetail() {
   return (
     <motion.div
-      layoutId="search-page"
-      className="rounded-3xl bg-black w-full h-full absolute inset-0 overflow-hidden"
+      layoutId="search-container"
+      className="absolute inset-0 w-full h-full bg-black p-6 border rounded-2xl border-black"
     >
-      <div className="w-full px-6 pt-6">
-        <div className="flex items-center bg-white/10 border border-white/20 rounded-full px-4 py-2 w-full">
-          <FiSearch className="text-white text-xl mr-2" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent w-full text-white placeholder-white/60 outline-none"
-          />
-        </div>
-      </div>
+      <motion.div
+        layoutId="search-box"
+        className="flex items-center bg-white/10 border border-white/20 rounded-2xl px-4 py-3 w-full"
+      >
+        <motion.div layoutId="search-icon" className="text-white mr-2">
+          <FiSearch className="text-xl" />
+        </motion.div>
+        <motion.input
+          layoutId="search-input"
+          type="text"
+          placeholder="Search..."
+          className="bg-transparent w-full text-white placeholder-white/60 outline-none text-base"
+          autoFocus
+        />
+      </motion.div>
     </motion.div>
   );
 }
