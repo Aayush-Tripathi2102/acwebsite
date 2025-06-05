@@ -18,9 +18,16 @@ const Terminal = () => {
 
   return (
     <motion.div
+<<<<<<< HEAD
+      key="terminal"
+      className="rounded-3xl bg-black h-full py-[53px] relative overflow-hidden"
+      onClick={() => router.push("/terminal")}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+=======
       layoutId="terminal-card"
       className="rounded-3xl bg-black h-full py-[53px] relative overflow-hidden"
       onClick={() => router.push("/terminal")}
+>>>>>>> f383ee2e7963b3ab6f09dcf69a2873e213c6ad3d
     >
       <div className="w-[300px] absolute left-1/3 translate-x-[-30%] h-[50px] rounded-full bg-[var(--terminal-primary)] opacity-100 blur-[75px]"></div>
       <div className="flex flex-wrap gap-5 px-[40px]">
