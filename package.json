@@ -12,6 +12,7 @@
     "ac-website": "file:",
     "framer-motion": "^12.15.0",
     "gsap": "^3.13.0",
+    "lucide-react": "^0.513.0",
     "motion": "^12.16.0",
     "next": "15.3.3",
     "react": "^18.2.0",
