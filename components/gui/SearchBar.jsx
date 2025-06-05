@@ -1,7 +1,9 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi";
-
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 const SearchBar = () => {
+  const router = useRouter();
   return (
     <div className="relative w-full  mx-2">
       {/* Search Icon */}
@@ -10,7 +12,8 @@ const SearchBar = () => {
       </div>
 
       {/* Input Field */}
-      <input
+      <motion.input
+        layoutId="search-page"
         type="text"
         placeholder="Search..."
         className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-2xl
@@ -18,6 +21,7 @@ const SearchBar = () => {
                  transition-all duration-200 ease-in-out
                  text-gray-700 placeholder-white
                  sm:text-sm md:text-base bg-[#21242F] h-9 lg:h-12"
+        onClick={() => router.push("/search")}
       />
     </div>
   );

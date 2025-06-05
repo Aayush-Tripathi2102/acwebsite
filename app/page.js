@@ -8,31 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useIsLargeScreen from "@/hooks/useIsLargeScreen"; // import the hook
 
 export default function Home() {
-  // const [isOpen, setIsOpen] = useState(false);
-  // const isLargeScreen = useIsLargeScreen(); // get screen size
 
-  // const transitionSettings = {
-  //   duration: 0.4,
-  //   ease: "easeInOut",
-  // };
-
-  // const searchOnlyAnimation = {
-  //   initial: {
-  //     scale: 0.5,
-  //     opacity: 0,
-  //     x: isLargeScreen ? 100 : 0,
-  //   },
-  //   animate: {
-  //     scale: 1,
-  //     opacity: 1,
-  //     x: 0,
-  //   },
-  //   exit: {
-  //     scale: 0.9,
-  //     opacity: 0,
-  //     x: isLargeScreen ? 100 : 0,
-  //   },
-  // };
 
   return (
     <div className="h-full w-full p-2 flex justify-center overflow-hidden">
@@ -43,7 +19,7 @@ export default function Home() {
         </div>
 
         {/* Terminal */}
-        <div className="col-span-2 row-span-3 row-start-2 lg:col-span-2 lg:row-span-5 lg:row-start-1 border-2 border-black bg-gray-100 p-4">
+        <div className="col-span-2 row-span-3 row-start-2 lg:col-span-2 lg:row-span-5 lg:row-start-1   p-4">
           <Terminal />
         </div>
 
