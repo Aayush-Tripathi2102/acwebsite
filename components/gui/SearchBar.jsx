@@ -1,27 +1,36 @@
+"use client";
 import React from "react";
 import { FiSearch } from "react-icons/fi";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
-const SearchBar = ({ setIsOpen }) => {
+const SearchBar = () => {
+  const router = useRouter();
+
   return (
-    <div className="relative w-full  mx-2">
-      {/* Search Icon */}
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <FiSearch className="h-5 w-5 text-gray-400" />
+    <motion.div
+      layoutId="search-container"
+      className="w-full mx-2 cursor-pointer z-50"
+      onClick={() => router.push("/search")}
+    >
+      <div className="relative w-full">
+        <motion.div
+          layoutId="search-box"
+          className="flex items-center bg-[#21242F] border border-gray-300 rounded-2xl pl-3 pr-4 py-2 h-10"
+        >
+          <motion.div layoutId="search-icon" className="text-gray-400 mr-2">
+            <FiSearch className="h-5 w-5" />
+          </motion.div>
+          <motion.input
+            layoutId="search-input"
+            type="text"
+            placeholder="Search..."
+            className="bg-transparent w-full text-gray-300 placeholder-white outline-none text-sm "
+            readOnly // prevent typing before navigation
+          />
+        </motion.div>
       </div>
-
-      {/* Input Field */}
-      <input
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
-        type="text"
-        placeholder="Search..."
-        className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-2xl
-                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                 transition-all duration-200 ease-in-out
-                 text-gray-700 placeholder-white
-                 sm:text-sm md:text-base bg-[#21242F] h-9 lg:h-12"
-      />
-    </div>
+    </motion.div>
   );
 };
 

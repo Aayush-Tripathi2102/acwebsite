@@ -1,11 +1,12 @@
 "use client";
-import AboutDetail from "@/components/gui/apps/AboutDetail";
+
+import GalleryDetail from "@/components/gui/apps/GalleryDetail";
 import React from "react";
 
 export default function AboutPage() {
   return (
     <div>
-      <AboutDetail />
+      <GalleryDetail />
     </div>
   );
 }

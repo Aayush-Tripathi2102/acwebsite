@@ -1,11 +1,11 @@
 "use client";
-import AboutDetail from "@/components/gui/apps/AboutDetail";
+import MailDetail from "@/components/gui/apps/MailDetail";
 import React from "react";
 
 export default function AboutPage() {
   return (
     <div>
-      <AboutDetail />
+      <MailDetail />
     </div>
   );
 }
