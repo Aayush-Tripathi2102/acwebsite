@@ -35,6 +35,7 @@ body {
   color: var(--foreground);
 }
 
+
 @layer components {
   .text-vcr {
     font-family: "VCR_OSD_MONO", monospace;
@@ -44,4 +45,12 @@ body {
     font-family: "VCR_OSD_MONO", monospace;
     @apply text-terminal-primary text-lg drop-shadow-[0_0_10px_#1EFF00];
   }
+}
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
