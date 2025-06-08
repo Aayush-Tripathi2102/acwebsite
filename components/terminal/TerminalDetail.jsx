@@ -242,7 +242,7 @@ export default function TerminalDetail() {
               ${
                 log.type === "ascii"
                   ? "text-[4px] leading-[5px] my-4"
-                  : "leading-tight"
+                  : "leading-tight text-[13px] md:text-[17px]"
               }
               whitespace-pre-wrap break-words
             `}
