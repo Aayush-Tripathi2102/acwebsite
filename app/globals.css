@@ -35,7 +35,6 @@ body {
   color: var(--foreground);
 }
 
-
 @layer components {
   .text-vcr {
     font-family: "VCR_OSD_MONO", monospace;
@@ -48,9 +47,15 @@ body {
 }
 .scrollbar-hide {
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.terminal-input > input::selection,
+.terminal-input > div::selection {
+  background-color: white;
+  color: black;
 }
