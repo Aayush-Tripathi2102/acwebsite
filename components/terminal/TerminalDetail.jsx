@@ -71,9 +71,27 @@ export default function TerminalDetail() {
     setFocus("command");
   }, [logs, setFocus]);
 
+  const quotes = [
+    "There’s no place like 127.0.0.1. 🏠",
+    "Talk is cheap. Show me the code. – Linus Torvalds",
+    "I don’t care if it works on your machine! We are not shipping your machine! 😜",
+    "To err is human. To really foul things up you need a computer. 🤖",
+    "Why do programmers always mix up Halloween and Christmas? Because Oct 31 == Dec 25.",
+    "A day without coding is like… just kidding, I have no idea. 💻",
+    "Real programmers count from 0.",
+    "I'm not lazy, I'm just highly optimized. ⚙️",
+    "Weeks of coding can save you hours of planning. 🙃",
+    "It compiles? Ship it! 🚢",
+    "If debugging is the process of removing bugs, then programming must be the process of putting them in. 🐞",
+    "Never trust a computer you can’t throw out a window. – Steve Wozniak",
+    "Software and cathedrals are much the same — first we build them, then we pray. 🛐",
+    "There are only two hard things in Computer Science: cache invalidation, naming things, and off-by-one errors.",
+    "Eat. Sleep. Code. Repeat. ☕",
+  ];
+
   const executeCommand = (command) => {
     if (command.startsWith("echo ")) {
-      const output = command.slice(5); // everything after "echo "
+      const output = command.slice(5);
       return [{ type: "output", content: output }];
     }
 
@@ -95,6 +113,8 @@ export default function TerminalDetail() {
           { type: "output", content: "  social   - view our social media" },
           { type: "output", content: "  clear    - clear the terminal" },
           { type: "output", content: "  help     - show this help message" },
+          { type: "output", content: "  join     - how to join Android Club" },
+          { type: "output", content: "  quote    - get a random tech quote" },
         ];
       case "projects":
         return [
@@ -131,9 +151,50 @@ export default function TerminalDetail() {
             content: "  LinkedIn: linkedin.com/company/ourteam",
           },
         ];
+      case "join":
+        return [
+          { type: "output", content: "Join Android Club VITC:" },
+          {
+            type: "output",
+            content:
+              "We welcome all students passionate about Android development and technology!",
+          },
+          {
+            type: "output",
+            content: "How to join:",
+          },
+          {
+            type: "output",
+            content:
+              "- Start by participating in our club events, workshops, and hackathons — this will give you a glimpse into what we do and how we work as a community.",
+          },
+          {
+            type: "output",
+            content:
+              "- Follow us on our social media handles to stay updated — keep an eye out for when we open our recruitment forms.",
+          },
+          {
+            type: "output",
+            content:
+              "- When the recruitment form goes live, fill it out thoughtfully! Tell us about your background in tech and the fields you’re most excited about.",
+          },
+          {
+            type: "output",
+            content:
+              "- If shortlisted, you'll be invited for an interview — this is your chance to interact with our team leads and showcase your skills, passion, and creativity.",
+          },
+          {
+            type: "output",
+            content:
+              "Stay curious, keep building — and we hope to see you in the club soon! 🚀🤖",
+          },
+        ];
+      case "quote":
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        return [{ type: "output", content: randomQuote }];
       case "cls":
       case "clear":
-        setLogs((prev) => prev.slice(0, 1)); // keep ASCII art
+        setLogs((prev) => prev.slice(0, 1));
         return null;
       case "exit":
         return [{ type: "output", content: "logout..." }];
@@ -148,7 +209,7 @@ export default function TerminalDetail() {
         }));
       case "uptime": {
         const now = Date.now();
-        let diff = Math.floor((now - startTime) / 1000); // diff in seconds
+        let diff = Math.floor((now - startTime) / 1000);
 
         const hours = Math.floor(diff / 3600);
         diff %= 3600;
