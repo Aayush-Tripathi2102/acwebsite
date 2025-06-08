@@ -150,7 +150,7 @@ export default function TerminalDetail() {
       layoutId="terminal-card"
       className="rounded-3xl bg-black w-full h-full absolute inset-0 m-auto overflow-hidden shadow-2xl"
     >
-      <div className="h-full w-full overflow-y-auto p-4 font-mono text-[3px] text-[var(--terminal-primary)] scrollbar-hide">
+      <div className="h-full w-full overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
         {logs.map((log, i) => (
           <div
             key={i}
