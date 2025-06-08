@@ -19,13 +19,13 @@ const Terminal = () => {
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-black h-full py-[30px] md:py-[53px] relative overflow-hidden"
+      className="rounded-3xl bg-black h-full py-[20px] md:py-[53px] relative overflow-hidden w-2/3 lg:w-full"
       onClick={() => router.push("/terminal")}
     >
       <div className="flex flex-wrap relative gap-2 md:gap-5 px-[20px] md:px-[40px]">
         <div className="absolute inset-0 bg-terminal-primary blur-3xl opacity-40"></div>
         <pre
-          className="text-terminal-primary text-[3px] md:text-[5px]"
+          className="text-terminal-primary text-[2px] lg:text-[5px]"
           style={{
             willChange: "transform, opacity",
             textShadow: `
@@ -43,7 +43,7 @@ const Terminal = () => {
                                                       `}
         </pre>
         <pre
-          className="text-terminal-primary text-[3px] md:text-[5px]"
+          className="text-terminal-primary text-[2px] lg:text-[5px]"
           style={{
             willChange: "transform, opacity",
             textShadow: `
@@ -61,7 +61,7 @@ const Terminal = () => {
                                  `}
         </pre>
         <pre
-          className="text-terminal-primary text-[3px] md:text-[5px]"
+          className="text-terminal-primary text-[2px] lg:text-[5px]"
           style={{
             willChange: "transform, opacity",
             textShadow: `
