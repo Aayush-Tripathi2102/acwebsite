@@ -112,7 +112,7 @@ export default function TerminalDetail() {
       case "help":
         return helpCommandOutput;
       case "ls":
-        switch (dir) {
+        switch (pwd) {
           case "projects":
             return projectsCommandOutput;
           case "Home":
