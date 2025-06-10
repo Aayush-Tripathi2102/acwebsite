@@ -34,7 +34,7 @@ const teamMembers = [
     description: "Strategic minds with unstoppable drive, they keep the club's spirit alive.",
     avatar: "/team/Aayush.jpg",
     instagram: "https://www.instagram.com/the_atp_world/",
-    linkedin: "https://linkedin.com/in/zaramanager",
+    linkedin: "#",
   },
   {
     name: "Aarav Kohli",
@@ -132,7 +132,9 @@ const groupedTeamMembers = orderedRoles.map((role) => ({
 // Component
 export default function TeamsDetail() {
   return (
-    <div className="absolute inset-0 bg-black text-white overflow-y-auto rounded-3xl p-6 sm:p-10 custom-scrollbar">
+    <div className="absolute inset-0 bg-black text-white overflow-y-scroll rounded-3xl p-6 sm:p-10 scrollbar-white">
+
+
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold">Our Team</h1>
         <p className="text-gray-400 mt-2">Meet the minds behind the club.</p>
