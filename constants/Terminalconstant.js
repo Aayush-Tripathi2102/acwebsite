@@ -12,6 +12,19 @@ export const projectsCommandOutput = [
   { type: "output", content: "  - Node.js API" },
   { type: "output", content: "  - Next.js Website" },
 ];
+
+export const homeLsOutput = [
+  { type: "output", content: "- Instagram" },
+  { type: "output", content: "- LinkedIn" },
+  { type: "output", content: "- About" },
+  { type: "output", content: "- Mail" },
+  { type: "output", content: "- Photos" },
+  { type: "output", content: "- Teams" },
+];
+
+export const emptyDir = [
+  { type: "output", content: "The directory is empty." },
+];
 export const aboutCommandOutput = [
   { type: "output", content: "About Us:" },
   {

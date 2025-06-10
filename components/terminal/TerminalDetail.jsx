@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import {
   aboutCommandOutput,
   AndroidClubLogo,
+  emptyDir,
   helpCommandOutput,
+  homeLsOutput,
   InvalidCommandOutput,
   projectsCommandOutput,
   socialCommandOutput,
@@ -23,6 +25,33 @@ export default function TerminalDetail() {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const { register, handleSubmit, reset, setFocus, setValue } = useForm();
   const logsEndRef = useRef(null);
+  const [pwd, setPwd] = useState("");
+
+  const [specs, setSpecs] = useState(null);
+
+  useEffect(() => {
+    function getSpecs() {
+      const canvas = document.createElement("canvas");
+      const gl =
+        canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
+
+      const data = {
+        OS: navigator.platform,
+        UserAgent: navigator.userAgent,
+        CPU_Cores: navigator.hardwareConcurrency || "Unknown",
+        RAM_GB: navigator.deviceMemory || "Unknown",
+        Screen: `${screen.width}x${screen.height}`,
+        GPU: debugInfo
+          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+          : "Unknown",
+      };
+
+      setSpecs(data);
+    }
+
+    getSpecs();
+  }, []);
 
   useEffect(() => {
     setStartTime(Date.now());
@@ -82,8 +111,53 @@ export default function TerminalDetail() {
     switch (command) {
       case "help":
         return helpCommandOutput;
-      case "projects":
-        return projectsCommandOutput;
+      case "ls":
+        switch (dir) {
+          case "projects":
+            return projectsCommandOutput;
+          case "Home":
+            return homeLsOutput;
+          default:
+            return emptyDir;
+        }
+      case "cd projects":
+        setPwd("projects");
+        return;
+      case "cd ..":
+        setPwd("Home");
+        return;
+      case "neofetch":
+        return [
+          {
+            type: "output",
+            content: `User Agent     : ${navigator.userAgent}`,
+          },
+          { type: "output", content: `Platform       : ${navigator.platform}` },
+          { type: "output", content: `Language       : ${navigator.language}` },
+          {
+            type: "output",
+            content: `Online         : ${navigator.onLine ? "Yes" : "No"}`,
+          },
+          {
+            type: "output",
+            content: `Screen Size    : ${window.screen.width}x${window.screen.height}`,
+          },
+          {
+            type: "output",
+            content: `Window Size    : ${window.innerWidth}x${window.innerHeight}`,
+          },
+          {
+            type: "output",
+            content: `Device Memory  : ${navigator.deviceMemory ?? "N/A"} GB`,
+          },
+          {
+            type: "output",
+            content: `CPU Cores      : ${
+              navigator.hardwareConcurrency ?? "N/A"
+            }`,
+          },
+        ];
+
       case "about":
         return aboutCommandOutput;
       case "social":
@@ -98,7 +172,7 @@ export default function TerminalDetail() {
       case "date":
         return [{ type: "output", content: new Date().toString() }];
       case "pwd":
-        return [{ type: "output", content: "Home/" }];
+        return [{ type: "output", content: pwd + "/" }];
       case "history":
         return prevCommands.map((cmd) => ({
           type: "output",
@@ -168,9 +242,9 @@ export default function TerminalDetail() {
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-black w-full h-full absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
+      className="rounded-3xl bg-black w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
     >
-      <div className="h-full w-full overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
+      <div className="h-full w-full md:w-2/3 overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
         <div
           className="terminal-text text-[4px] leading-[5px] my-4 whitespace-pre-wrap break-words"
           style={{
@@ -224,6 +298,23 @@ export default function TerminalDetail() {
         </form>
 
         <div ref={logsEndRef} />
+      </div>
+      <div className="h-full hidden right-0 top-0 md:inline-block absolute w-1/3">
+        <pre
+          style={{
+            textShadow: `
+              0 0 10px var(--terminal-primary),
+              0 0 40px var(--terminal-primary)
+            `,
+          }}
+          className="bg-black text-terminal-primary  p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
+        >
+          {!specs
+            ? "Fetching system specs..."
+            : Object.entries(specs)
+                .map(([key, val]) => `${key}: ${val}\n`)
+                .join("")}
+        </pre>
       </div>
     </motion.div>
   );
