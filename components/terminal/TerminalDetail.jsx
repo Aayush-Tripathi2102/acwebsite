@@ -35,7 +35,7 @@ export default function TerminalDetail() {
       } else {
         clearInterval(interval);
       }
-    }, 500); // Speed of appearing commands
+    }, 300); // Speed of appearing commands
 
     return () => clearInterval(interval);
   }, []);
@@ -186,7 +186,7 @@ export default function TerminalDetail() {
             key={i}
             className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
           >
-            {log?.content}
+            {log.content}
           </div>
         ))}
 

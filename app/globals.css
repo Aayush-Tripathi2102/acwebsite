@@ -23,7 +23,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #21242f;
+    --background: #000000;
     --foreground: #ededed;
     --terminal-primary: #1eff00;
     --tablet-border: #8c8f98;
