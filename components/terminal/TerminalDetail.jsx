@@ -1,32 +1,15 @@
-import React from "react";
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function TerminalDetail() {
-  return (
-    <motion.div
-      layoutId="terminal-card"
-      className="rounded-3xl bg-black w-full h-full py-[53px] absolute inset-0 overflow-hidden"
-    >
-      <div className="pl-[50px] top-[30px] scale-[0.5] origin-top-left flex">
-        {/* Left Side: ASCII Android + Terminal UI */}
-        <div>
-          <div className="relative">
-            <pre
-              className="text-terminal-primary text-[5px] relative"
-              style={{
-                willChange: "transform, opacity",
-                textShadow: `
-      0 0 10px var(--terminal-primary),
-      0 0 10px var(--terminal-primary),
-      0 0 10px var(--terminal-primary),
-      0 0 40px var(--terminal-primary)
-    `,
-              }}
-            >
-              <div className="w-[250px] absolute left-1/6 top-1/6 translate-x-[-30%] h-[200px] rounded-full bg-[var(--terminal-primary)] opacity-25 blur-[75px]"></div>
-              {`                        /                                                       
+  const router = useRouter();
+  const [logs, setLogs] = useState([
+    {
+      type: "ascii",
+      content: `                        /                                                       
                         //                             /* .                     
                          //  (                        /.                        
                         /  //        //////*        //                            
@@ -49,7 +32,6 @@ export default function TerminalDetail() {
   ,///////////  /////////////////////////////////////////////////  ///////////  
   ,///////////  /////////////////////////////////////////////////  ///////////  
   ,///////////  /////////////////////////////////////////////////  ///////////  
-  ,///////////  /////////////////////////////////////////////////  ///////////  
   ,//////////*  /////////////////////////////////////////////////  ///////////  
    //////////   /////////////////////////////////////////////////   /////////*  
   #   ,//,   (  /////////////////////////////////////////////////  .   *//.     
@@ -63,128 +45,300 @@ export default function TerminalDetail() {
                           ///////////       ///////////                         
                           //////////* .     ///////////                         
                            ////////           ///////*                          
-`}
-            </pre>
+`,
+    },
+    {
+      type: "output",
+      content: "Welcome to Android Club VITC's Terminal Interface",
+    },
+    { type: "output", content: "Type 'help' to see available commands" },
+    { type: "output", content: "" },
+    { type: "output", content: ">>> Boot sequence initialized..." },
+    { type: "output", content: ">>> Environment loaded. Ready for commands." },
+  ]);
+  const [startTime, setStartTime] = useState();
+  useEffect(() => {
+    setStartTime(Date.now);
+  }, []);
+
+  const [prevCommands, setPrevCommands] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const { register, handleSubmit, reset, setFocus, setValue } = useForm();
+  const logsEndRef = useRef(null);
+
+  useEffect(() => {
+    logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setFocus("command");
+  }, [logs, setFocus]);
+
+  const quotes = [
+    "There’s no place like 127.0.0.1. 🏠",
+    "Talk is cheap. Show me the code. – Linus Torvalds",
+    "I don’t care if it works on your machine! We are not shipping your machine! 😜",
+    "To err is human. To really foul things up you need a computer. 🤖",
+    "Why do programmers always mix up Halloween and Christmas? Because Oct 31 == Dec 25.",
+    "A day without coding is like… just kidding, I have no idea. 💻",
+    "Real programmers count from 0.",
+    "I'm not lazy, I'm just highly optimized. ⚙️",
+    "Weeks of coding can save you hours of planning. 🙃",
+    "It compiles? Ship it! 🚢",
+    "If debugging is the process of removing bugs, then programming must be the process of putting them in. 🐞",
+    "Never trust a computer you can’t throw out a window. – Steve Wozniak",
+    "Software and cathedrals are much the same — first we build them, then we pray. 🛐",
+    "There are only two hard things in Computer Science: cache invalidation, naming things, and off-by-one errors.",
+    "Eat. Sleep. Code. Repeat. ☕",
+  ];
+
+  const executeCommand = (command) => {
+    if (command.startsWith("echo ")) {
+      const output = command.slice(5);
+      return [{ type: "output", content: output }];
+    }
+
+    if (command.includes("rm -rf")) {
+      return [
+        {
+          type: "output",
+          content:
+            "Hold up! That command could wipe everything out. Let's not do that here! ;)",
+        },
+      ];
+    }
+    switch (command) {
+      case "help":
+        return [
+          { type: "output", content: "Available commands:" },
+          { type: "output", content: "  projects - see our projects" },
+          { type: "output", content: "  about    - learn about us" },
+          { type: "output", content: "  social   - view our social media" },
+          { type: "output", content: "  clear    - clear the terminal" },
+          { type: "output", content: "  help     - show this help message" },
+          { type: "output", content: "  join     - how to join Android Club" },
+          { type: "output", content: "  quote    - get a random tech quote" },
+        ];
+      case "projects":
+        return [
+          { type: "output", content: "Our Projects:" },
+          { type: "output", content: "  - React App" },
+          { type: "output", content: "  - Node.js API" },
+          { type: "output", content: "  - Next.js Website" },
+        ];
+      case "about":
+        return [
+          { type: "output", content: "About Us:" },
+          {
+            type: "output",
+            content:
+              "  We are a team of developers passionate about building web applications.",
+          },
+          {
+            type: "output",
+            content:
+              "  Our mission is to create user-friendly and efficient software solutions.",
+          },
+          {
+            type: "output",
+            content: "  We believe in continuous learning and improvement.",
+          },
+        ];
+      case "social":
+        return [
+          { type: "output", content: "Our Socials:" },
+          { type: "output", content: "  Twitter: @ourteam" },
+          { type: "output", content: "  GitHub: github.com/ourteam" },
+          {
+            type: "output",
+            content: "  LinkedIn: linkedin.com/company/ourteam",
+          },
+        ];
+      case "join":
+        return [
+          { type: "output", content: "Join Android Club VITC:" },
+          {
+            type: "output",
+            content:
+              "We welcome all students passionate about Android development and technology!",
+          },
+          {
+            type: "output",
+            content: "How to join:",
+          },
+          {
+            type: "output",
+            content:
+              "- Start by participating in our club events, workshops, and hackathons — this will give you a glimpse into what we do and how we work as a community.",
+          },
+          {
+            type: "output",
+            content:
+              "- Follow us on our social media handles to stay updated — keep an eye out for when we open our recruitment forms.",
+          },
+          {
+            type: "output",
+            content:
+              "- When the recruitment form goes live, fill it out thoughtfully! Tell us about your background in tech and the fields you’re most excited about.",
+          },
+          {
+            type: "output",
+            content:
+              "- If shortlisted, you'll be invited for an interview — this is your chance to interact with our team leads and showcase your skills, passion, and creativity.",
+          },
+          {
+            type: "output",
+            content:
+              "Stay curious, keep building — and we hope to see you in the club soon! 🚀🤖",
+          },
+        ];
+      case "quote":
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        return [{ type: "output", content: randomQuote }];
+      case "cls":
+      case "clear":
+        setLogs((prev) => prev.slice(0, 1));
+        return null;
+      case "exit":
+        return [{ type: "output", content: "logout..." }];
+      case "date":
+        return [{ type: "output", content: new Date().toString() }];
+      case "pwd":
+        return [{ type: "output", content: "Home/" }];
+      case "history":
+        return prevCommands.map((cmd, idx) => ({
+          type: "output",
+          content: `${cmd.command}`,
+        }));
+      case "uptime": {
+        const now = Date.now();
+        let diff = Math.floor((now - startTime) / 1000);
+
+        const hours = Math.floor(diff / 3600);
+        diff %= 3600;
+        const minutes = Math.floor(diff / 60);
+        const seconds = diff % 60;
+
+        let uptimeStr = "up ";
+
+        if (hours > 0) uptimeStr += `${hours} hour${hours > 1 ? "s" : ""}, `;
+        if (minutes > 0)
+          uptimeStr += `${minutes} minute${minutes > 1 ? "s" : ""}, `;
+
+        uptimeStr += `${seconds} second${seconds !== 1 ? "s" : ""}`;
+
+        return [{ type: "output", content: uptimeStr }];
+      }
+      default:
+        if (command) {
+          return [
+            {
+              type: "output",
+              content: `'${command}' is not recognized as a valid command.`,
+            },
+            { type: "output", content: "Type 'help' for available commands." },
+          ];
+        }
+        return null;
+    }
+  };
+
+  const onSubmit = async (data) => {
+    setHistoryIndex(prevCommands.length + 1);
+    setPrevCommands([...prevCommands, data]);
+    const raw = data.command?.trim();
+    if (raw == "exit") {
+      setTimeout(() => {
+        router.push("/");
+      }, [1000]);
+    }
+    if (!raw) {
+      reset();
+      return;
+    }
+
+    const command = raw.toLowerCase();
+
+    setLogs((prev) => [...prev, { type: "output", content: `>>> ${command}` }]);
+
+    setTimeout(() => {
+      const result = executeCommand(command);
+      if (result) setLogs((prev) => [...prev, ...result]);
+      reset();
+    }, 100);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (prevCommands.length === 0) return;
+
+      setHistoryIndex((prevIndex) => {
+        const newIndex = Math.max(prevIndex - 1, 0);
+        const cmd = prevCommands[newIndex]?.command || "";
+        setValue("command", cmd);
+        return newIndex;
+      });
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (prevCommands.length === 0) return;
+
+      setHistoryIndex((prevIndex) => {
+        const newIndex = Math.min(prevIndex + 1, prevCommands.length);
+        const cmd = prevCommands[newIndex]?.command || "";
+        setValue("command", cmd);
+        return newIndex;
+      });
+    }
+  };
+
+  return (
+    <motion.div
+      layoutId="terminal-card"
+      className="rounded-3xl bg-black w-full h-full absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
+    >
+      <div className="h-full w-full overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
+        {logs.map((log, i) => (
+          <div
+            key={i}
+            className={`
+              terminal-text
+              ${
+                log.type === "ascii"
+                  ? "text-[4px] leading-[5px] my-4"
+                  : "leading-tight text-[13px] md:text-[17px]"
+              }
+              whitespace-pre-wrap break-words
+            `}
+            style={
+              log.type === "ascii"
+                ? {
+                    textShadow: `
+                      0 0 10px var(--terminal-primary),
+                      0 0 10px var(--terminal-primary),
+                      0 0 10px var(--terminal-primary),
+                      0 0 40px var(--terminal-primary)
+                    `,
+                  }
+                : {}
+            }
+          >
+            {log.content}
           </div>
+        ))}
 
-          <div className="leading-none mt-15">
-            <div className="terminal-text text-[20px]">
-              <p className="whitespace-nowrap">
-                Welcome Android Club VITC’s Terminal Interface
-              </p>
-              <p className="mt-[-12px]">
-                Type ‘help’ to see available commands.
-              </p>
-            </div>
-            <div className="terminal-text mt-8 text-[20px]">
-              <p className="whitespace-nowrap">
-                &gt;&gt;&gt; Boot sequence initialized...
-              </p>
-              <p className="mt-[-12px]">
-                &gt;&gt;&gt; Environment loaded. Ready for commands.
-              </p>
-            </div>
-          </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex items-center mt-2 terminal-text"
+        >
+          <span className="mr-1">{">>>"} </span>
+          <input
+            {...register("command")}
+            className="bg-transparent flex-grow outline-none caret-[var(--terminal-primary)] terminal-text selection:text-white"
+            autoComplete="off"
+            spellCheck="false"
+            onKeyDown={handleKeyDown}
+          />
+        </form>
 
-          {/* Wire + Cursor + Path Pill */}
-          <div className="relative flex items-start mt-10">
-            {/* Grey Wire + Green Cursor */}
-            <div className="absolute left-[-40px] top-[30px]">
-              <Image
-                src="/terminal/grey-wire.png"
-                alt="Wire"
-                width={40}
-                height={40}
-                className="z-0"
-              />
-              <div className="absolute left-[40px] top-[40px] w-[20px] h-[45px] bg-terminal-primary shadow-[0_0_20px_4px_var(--terminal-primary)] rounded-sm z-10" />
-              <input
-                type="text"
-                className="bg-transparent border-none outline-none caret-white text-white placeholder-transparent w-full"
-                autoFocus
-              />
-            </div>
-
-            {/* Path Pill */}
-            <div className="flex items-center bg-[#1a1a2e] rounded-full px-3 sm:px-6 py-2 text-[20px] text-vcr text-terminal-primary w-fit shadow-md border border-gray-600">
-              {/* Android Icon + user x */}
-              <div className="flex items-center">
-                <Image
-                  src="/terminal/bugdroid icon.png"
-                  alt="Droid Icon"
-                  width={26}
-                  height={26}
-                  className="mr-2"
-                />
-                <span className="mr-4">user x</span>
-              </div>
-
-              {/* Arrow separator */}
-              {/* <div className="mx-1 sm:mx-2 rotate-45 w-5 h-5 border-t border-r border-terminal-primary bg-[#1a1a2e]" /> */}
-              <svg
-                width="14"
-                height="50"
-                viewBox="0 0 14 23"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="scale-y-150"
-              >
-                <path
-                  d="M1.04927 1L12.5474 12.0874L1.04927 22.3536"
-                  stroke="#8C8F98"
-                />
-              </svg>
-
-              {/* home ~ */}
-              <span className="ml-4">home ~</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side: userx@androidclubmachine + colors */}
-        <div className="hidden md:inline-block ml-[100px] mt-[40px] text-[20px] text-terminal-vcr text-vcr">
-          <p>
-            <span className="text-[25px] text-terminal-primary">
-              userx@androidclubmachine
-            </span>
-          </p>
-
-          <div className="border-t border-gray-400 w-[550px] mt-2 mb-2"></div>
-
-          {/* <div className="border-t border-gray-400 w-[550px] mt-70 mb-2"></div> */}
-
-          {/* <div className="flex items-center gap-4">
-            <span className="text-terminal-primary text-[25px]">colors:</span>
-            <div className="flex gap-3">
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: "#1EFF00" }}
-              ></div>
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: "#181D31" }}
-              ></div>
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: "#8C8F98" }}
-              ></div>
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: "#1EFF00" }}
-              ></div>
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: "#181D31" }}
-              ></div>
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: "#8C8F98" }}
-              ></div>
-            </div>
-          </div> */}
-
-          {/* <div className="border-t border-gray-400 w-[550px] mt-2"></div> */}
-        </div>
+        <div ref={logsEndRef} />
       </div>
     </motion.div>
   );
