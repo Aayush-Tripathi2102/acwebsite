@@ -1,14 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import TeamCard from "./TeamCard";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; 
 
+// Team Data
 const teamMembers = [
   {
     name: "Dr. Shola Usha Rani",
     role: "Faculty Coordinator",
-    description: "Backbone of Android Club,playing a crucial role in bringing our vision to life.",
+    description: "Backbone of Android Club, playing a crucial role in bringing our vision to life.",
     avatar: "/team/shola maam.jpg",
     instagram: "https://instagram.com/denisha",
     linkedin: "https://www.linkedin.com/in/dr-shola-usharani-86b7a1a5/",
@@ -16,7 +15,7 @@ const teamMembers = [
   {
     name: "Aditi Babu",
     role: "Secretary",
-    description: "The bridge between chaos and clarity -keeping everything organised,on track and on time.",
+    description: "The bridge between chaos and clarity - keeping everything organised, on track and on time.",
     avatar: "/team/Aditi Babu.jpeg.jpg",
     instagram: "https://www.instagram.com/aditiibabu/",
     linkedin: "https://www.linkedin.com/in/aditi-babu-920444293/",
@@ -35,12 +34,12 @@ const teamMembers = [
     description: "Strategic minds with unstoppable drive, they keep the club's spirit alive.",
     avatar: "/team/Aayush.jpg",
     instagram: "https://www.instagram.com/the_atp_world/",
-    linkedin: "https://linkedin.com/in/zaramanager",
+    linkedin: "#",
   },
   {
     name: "Aarav Kohli",
     role: "Operations Head",
-    description: "The guy making sure everything runs like a well-oiled machine — always on it, always reliable.",
+    description: "Making sure everything runs like a well-oiled machine — always on it, always reliable.",
     avatar: "/team/Aarav.jpg",
     instagram: "https://www.instagram.com/aarav.kohli/",
     linkedin: "https://www.linkedin.com/in/aaravkohli/",
@@ -56,7 +55,7 @@ const teamMembers = [
   {
     name: "Jefrey Jose",
     role: "Managment Head",
-    description: "He’s the brain behind the plans, turning “what if” into “what’s next” with style.",
+    description: "He’s the brain behind the plans, turning 'what if' into 'what’s next' with style.",
     avatar: "/team/Jeffrey.jpg",
     instagram: "https://www.instagram.com/_dj.jose_/",
     linkedin: "https://www.linkedin.com/in/jefrey-jose-228284219/",
@@ -64,10 +63,10 @@ const teamMembers = [
   {
     name: "Palak Ramani",
     role: "Technical Head",
-    description: "She’s the one turning coffee into code and chaos into clean logic — always two steps ahead of the bugs.",
+    description: "Turning coffee into code and chaos into clean logic — always two steps ahead of bugs.",
     avatar: "/team/Palak.jpg",
     instagram: "https://www.instagram.com/_palak_ramani_/",
-    linkedin: "hhttps://www.linkedin.com/in/palak-ramani-a3b147286/",
+    linkedin: "https://www.linkedin.com/in/palak-ramani-a3b147286/",
   },
   {
     name: "Krishna Sharma K",
@@ -87,7 +86,7 @@ const teamMembers = [
   },
   {
     name: "Anusriya",
-    role: " Design Head",
+    role: "Design Head",
     description: "She turns ideas into visuals and vision into vibe — the one making everything look effortlessly iconic.",
     avatar: "/team/Anushriya.jpg",
     instagram: "#",
@@ -95,83 +94,72 @@ const teamMembers = [
   },
   {
     name: "Vaishnav S P",
-    role: "Sponsorship and Managment Head",
+    role: "Sponsorship and Marketing Head",
     description: "The voice that sells the vision — with strategy in mind and confidence in every pitch.",
     avatar: "/team/Vaishnav.jpg",
     instagram: "https://www.instagram.com/vaish.nav_s.p_/",
-    linkedin: "https://www.linkedin.com/in/anusriya-sridhar/",
+    linkedin: "#",
+  },
+  {
+    name: "Dipyaman Chakraborty",
+    role: "Sponsorship and Marketing Head",
+    description: "He’s the connector and closer — turning conversations into collaborations with ease.",
+    avatar: "/team/Dipyaman.jpg",
+    instagram: "https://www.instagram.com/diipyaman/",
+    linkedin: "https://www.linkedin.com/in/dipyaman-chakraborty/",
   },
 ];
 
+// Desired Order
+const orderedRoles = [
+  "Faculty Coordinator",
+  "Secretary",
+  "General Secretary",
+  "Operations Head",
+  "Managment Head",
+  "Technical Head",
+  "Content and SM Head",
+  "Design Head",
+  "Sponsorship and Marketing Head",
+];
+
+// Group members by role
+const groupedTeamMembers = orderedRoles.map((role) => ({
+  role,
+  members: teamMembers.filter((member) => member.role === role),
+}));
+
+// Component
 export default function TeamsDetail() {
-  const [centerIndex, setCenterIndex] = useState(0);
-  const CARD_WIDTH = 280;
-  const GAP = 24;
-  const OFFSET = (CARD_WIDTH + GAP) * centerIndex;
-
-  const scrollLeft = () => {
-    setCenterIndex((prev) => (prev === 0 ? teamMembers.length - 1 : prev - 1));
-  };
-
-  const scrollRight = () => {
-    setCenterIndex((prev) => (prev + 1) % teamMembers.length);
-  };
-
   return (
-    <motion.div
-      layoutId="team-page"
-      className="rounded-3xl bg-black w-full h-full absolute inset-0 overflow-y-hidden overflow-x-hidden text-white"
-    >
-      <div className="p-10 text-center select-none">
-        <h1 className="text-3xl font-bold">Our Team</h1>
-        <p className="mt-4 mb-8 text-gray-400">Meet the minds behind the club.</p>
+    <div className="absolute inset-0 bg-black text-white overflow-y-scroll rounded-3xl p-6 sm:p-10 scrollbar-white">
 
-        {/* Carousel */}
-        <div className="relative w-full flex items-center justify-center mt-10 h-[420px]">
-          {/* Left Arrow */}
-          <button
-            onClick={scrollLeft}
-            className="absolute left-3 z-10 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full shadow-md transition text-base flex items-center justify-center"
-          >
-            <FaChevronLeft className="w-4 h-4" />
-          </button>
 
-          {/* Scrollable Cards */}
-          <div className="overflow-visible w-[90%] max-w-6xl mx-auto">
-            <motion.div
-              className="flex gap-6 justify-start items-center cursor-grab active:cursor-grabbing"
-              animate={{ x: `calc(50% - ${OFFSET + CARD_WIDTH / 2}px)` }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              drag="x"
-              dragConstraints={{ left: -1000, right: 1000 }}
-            >
-              {teamMembers.map((member, index) => {
-                const isCenter = index === centerIndex;
-                const scale = isCenter ? "hover:scale-105" : "scale-95";
-                const blur = !isCenter ? "blur-sm opacity-60" : "";
-
-                return (
-                  <motion.div
-                    key={index}
-                    className={`transition-all duration-300 ${scale} ${blur}`}
-                    style={{ width: `${CARD_WIDTH}px` }}
-                  >
-                    <TeamCard {...member} />
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
-
-          {/* Right Arrow */}
-          <button
-            onClick={scrollRight}
-            className="absolute right-3 z-10 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full shadow-md transition text-base flex items-center justify-center"
-          >
-            <FaChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold">Our Team</h1>
+        <p className="text-gray-400 mt-2">Meet the minds behind the club.</p>
       </div>
-    </motion.div>
+
+      <div className="space-y-20 pb-12">
+        {groupedTeamMembers.map(({ role, members }) =>
+          members.length > 0 ? (
+            <section key={role} className="w-full flex flex-col items-center">
+              <h2 className="text-2xl font-semibold text-green-400 mb-8 text-center">
+                {role}
+              </h2>
+              <div
+                className={`flex flex-wrap justify-center gap-8 ${
+                  members.length === 1 ? "max-w-md" : "max-w-6xl"
+                } w-full`}
+              >
+                {members.map((member, idx) => (
+                  <TeamCard key={idx} {...member} />
+                ))}
+              </div>
+            </section>
+          ) : null
+        )}
+      </div>
+    </div>
   );
 }
