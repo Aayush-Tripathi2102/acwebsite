@@ -57,9 +57,9 @@ body {
 }
 
 .scrollbar-white {
-  scrollbar-width: thin;                 /* Firefox */
-  scrollbar-color: white transparent;   /* Firefox: white thumb, transparent track */
-  overflow-y: scroll !important;         /* Always show scrollbar */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: white transparent; /* Firefox: white thumb, transparent track */
+  overflow-y: scroll !important; /* Always show scrollbar */
 }
 
 .scrollbar-hide {
@@ -75,6 +75,4 @@ body {
 .terminal-input > div::selection {
   background-color: white;
   color: black;
-}
-
 }
