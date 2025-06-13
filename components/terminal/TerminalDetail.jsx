@@ -34,7 +34,8 @@ export default function TerminalDetail() {
   useEffect(() => {
     function getSpecs() {
       const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      const gl =
+        canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
       const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
 
       const data = {
@@ -43,7 +44,9 @@ export default function TerminalDetail() {
         CPU_Cores: navigator.hardwareConcurrency || "Unknown",
         RAM_GB: navigator.deviceMemory || "Unknown",
         Screen: `${screen.width}x${screen.height}`,
-        GPU: debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : "Unknown",
+        GPU: debugInfo
+          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+          : "Unknown",
       };
 
       setSpecs(data);
@@ -121,7 +124,11 @@ export default function TerminalDetail() {
       case "help":
         return helpCommandOutput;
       case "ls":
-        return pwd === "projects" ? projectsCommandOutput : pwd === "Home" ? homeLsOutput : emptyDir;
+        return pwd === "projects"
+          ? projectsCommandOutput
+          : pwd === "Home"
+          ? homeLsOutput
+          : emptyDir;
       case "cd projects":
         setPwd("projects");
         return;
@@ -130,14 +137,34 @@ export default function TerminalDetail() {
         return;
       case "neofetch":
         return [
-          { type: "output", content: `User Agent     : ${navigator.userAgent}` },
+          {
+            type: "output",
+            content: `User Agent     : ${navigator.userAgent}`,
+          },
           { type: "output", content: `Platform       : ${navigator.platform}` },
           { type: "output", content: `Language       : ${navigator.language}` },
-          { type: "output", content: `Online         : ${navigator.onLine ? "Yes" : "No"}` },
-          { type: "output", content: `Screen Size    : ${window.screen.width}x${window.screen.height}` },
-          { type: "output", content: `Window Size    : ${window.innerWidth}x${window.innerHeight}` },
-          { type: "output", content: `Device Memory  : ${navigator.deviceMemory ?? "N/A"} GB` },
-          { type: "output", content: `CPU Cores      : ${navigator.hardwareConcurrency ?? "N/A"}` },
+          {
+            type: "output",
+            content: `Online         : ${navigator.onLine ? "Yes" : "No"}`,
+          },
+          {
+            type: "output",
+            content: `Screen Size    : ${window.screen.width}x${window.screen.height}`,
+          },
+          {
+            type: "output",
+            content: `Window Size    : ${window.innerWidth}x${window.innerHeight}`,
+          },
+          {
+            type: "output",
+            content: `Device Memory  : ${navigator.deviceMemory ?? "N/A"} GB`,
+          },
+          {
+            type: "output",
+            content: `CPU Cores      : ${
+              navigator.hardwareConcurrency ?? "N/A"
+            }`,
+          },
         ];
       case "about":
         return aboutCommandOutput;
@@ -230,7 +257,7 @@ export default function TerminalDetail() {
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-black w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
+      className="rounded-3xl bg-[#000700] w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
     >
       <div className="h-full w-full md:w-2/3 overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
         <div
@@ -289,7 +316,10 @@ export default function TerminalDetail() {
           </div>
         ))}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center mt-2 terminal-text">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex items-center mt-2 terminal-text"
+        >
           <span className="mr-1">{">>>"} </span>
           <input
             {...register("command")}
@@ -311,7 +341,7 @@ export default function TerminalDetail() {
               0 0 40px var(--terminal-primary)
             `,
           }}
-          className="bg-black text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
+          className="bg-[#000700] text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
         >
           {!specs
             ? "Fetching system specs..."

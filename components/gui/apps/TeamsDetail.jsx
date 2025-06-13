@@ -27,7 +27,7 @@ const teamMembers = [
     name: "Naman Jain",
     role: "General Secretary",
     description:
-      "With foresight in mind and finesse in every move, they steer the ship through every groove.",
+      "With foresight in mind and finesse in every move, he steers the ship through every groove.",
     avatar: "/team/Naman.jpg",
     instagram: "https://www.instagram.com/krazzyy.naman/",
     linkedin: "https://www.linkedin.com/in/naman-jain-17b19730b/",
@@ -36,7 +36,7 @@ const teamMembers = [
     name: "Aayush Tripathi",
     role: "General Secretary",
     description:
-      "Strategic minds with unstoppable drive, they keep the club's spirit alive.",
+      "Strategic minds with unstoppable drive, he keeps the club's spirit alive.",
     avatar: "/team/Aayush.jpg",
     instagram: "https://www.instagram.com/the_atp_world/",
     linkedin: "#",
@@ -88,7 +88,7 @@ const teamMembers = [
   },
   {
     name: "Vaishnavi",
-    role: "Content and SM Head",
+    role: "Content and Social Media Head",
     description:
       "She weaves words with wit and heart — the voice behind the posts and the stories that stick.",
     avatar: "/team/Vaishnavi.JPG",
@@ -132,9 +132,9 @@ const orderedRoles = [
   "Operations Head",
   "Managment Head",
   "Technical Head",
-  "Content and SM Head",
-  "Design Head",
+  "Content and Social Media Head",
   "Sponsorship and Marketing Head",
+  "Design Head",
 ];
 
 // Group members by role
@@ -148,7 +148,7 @@ export default function TeamsDetail() {
   return (
     <motion.div
       layoutId="team-page"
-      className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black text-white overflow-y-scroll rounded-3xl p-6 sm:p-10 scrollbar-white"
+      className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black text-white overflow-y-scroll rounded-3xl p-6 sm:p-10"
     >
       {/* Header Section */}
       <div className="mb-16 text-center">
@@ -212,6 +212,22 @@ export default function TeamsDetail() {
             opacity: 1;
             transform: translateY(0);
           }
+        }
+        ::-webkit-scrollbar {
+          width: 8px;
+          background: transparent;
+        }
+        ::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: transparent;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: transparent;
+        }
+        * {
+          scrollbar-width: none;
         }
       `}</style>
     </motion.div>
