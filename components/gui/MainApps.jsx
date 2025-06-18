@@ -34,7 +34,7 @@ const Apps = [
   },
   {
     src: "/gui/TeamsIcon.png",
-    alt: "Teams",
+    alt: "Team",
     href: "/teams",
     layoutId: "team-page",
   },
@@ -46,11 +46,11 @@ const MainApps = () => {
   const router = useRouter();
   return (
     <div className="w-full h-full p-4">
-      <div className="grid grid-cols-4 sm:grid-cols-4 gap-4 place-items-center h-full w-full">
+      <div className="grid grid-cols-4 sm:grid-cols-4 gap-4  place-items-center h-full w-full">
         {Apps.map((icon, i) => (
           <div
             key={i}
-            className="w-16 h-16 flex items-center justify-center p-3 md:p-0 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95 hover:shadow-md cursor-pointer rounded-xl"
+            className="w-20 h-20 flex flex-col mb-5 items-center justify-center p-3 md:p-0 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95 cursor-pointer rounded-xl"
           >
             <motion.img
               transition={{
@@ -65,6 +65,7 @@ const MainApps = () => {
               alt={icon.alt}
               className="w-12 h-12 object-contain cursor-pointer"
             />
+            <p className="text-[10px] text-center pt-1">{icon.alt}</p>
           </div>
         ))}
       </div>
