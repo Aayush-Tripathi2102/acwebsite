@@ -32,41 +32,40 @@ export default function TerminalDetail() {
   const [specs, setSpecs] = useState(null);
 
   useEffect(() => {
-    function getSpecs() {
-      const canvas = document.createElement("canvas");
-      const gl =
-        canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-      const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
+  const canvas = document.createElement("canvas");
+  const gl =
+    canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
 
-      const data = {
-        OS: navigator.platform,
-        UserAgent: navigator.userAgent,
-        CPU_Cores: navigator.hardwareConcurrency || "Unknown",
-        RAM_GB: navigator.deviceMemory || "Unknown",
-        Screen: `${screen.width}x${screen.height}`,
-        GPU: debugInfo
-          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-          : "Unknown",
-      };
+  const data = {
+    OS: navigator.platform,
+    UserAgent: navigator.userAgent,
+    CPU_Cores: navigator.hardwareConcurrency || "Unknown",
+    RAM_GB: navigator.deviceMemory || "Unknown",
+    Screen: `${screen.width}x${screen.height}`,
+    GPU: debugInfo
+      ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+      : "Unknown",
+  };
 
-      setSpecs(data);
-    }
-    getSpecs();
-  }, []);
+  setSpecs(data);
+}, []);
 
   useEffect(() => {
-    setStartTime(Date.now());
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < StartCommands.length) {
-        setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
+  setStartTime(Date.now());
+  let index = 0;
+  const interval = setInterval(() => {
+    if (index < StartCommands.length) {
+      setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
+      index++;
+    } else {
+      clearInterval(interval);
+    }
+  }, 300); // Speed of appearing commands
+
+  return () => clearInterval(interval);
+}, []);
+
 
   useEffect(() => {
     logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -130,6 +129,14 @@ export default function TerminalDetail() {
           ? homeLsOutput
           : emptyDir;
       case "cd projects":
+        if (pwd === "projects") {
+          return [
+            {
+              type: "output",
+              content: "fatal error : no directory found",
+            },
+          ];
+        }
         setPwd("projects");
         return;
       case "cd ..":
@@ -287,34 +294,14 @@ export default function TerminalDetail() {
         ))}
 
         {logs.map((log, i) => (
-          <div
-            key={i}
-            className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
-          >
-            {pwd === "Home" &&
-            typeof logs[i - 1]?.content === "string" &&
-            logs[i - 1].content.toLowerCase().includes(">>> ls") &&
-            typeof log.content === "string"
-              ? log.content.split(" ").map((item, index) =>
-                  linkMap[item] ? (
-                    <a
-                      key={index}
-                      href={linkMap[item]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline text-blue-400 hover:text-blue-600 mx-1"
-                    >
-                      {item}
-                    </a>
-                  ) : (
-                    <span key={index} className="mx-1">
-                      {item}
-                    </span>
-                  )
-                )
-              : log?.content}
-          </div>
-        ))}
+  <div
+    key={i}
+    className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
+  >
+    {log.content}
+  </div>
+))}
+
 
         <form
           onSubmit={handleSubmit(onSubmit)}
