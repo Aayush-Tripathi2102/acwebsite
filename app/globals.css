@@ -45,6 +45,23 @@ body {
     @apply text-terminal-primary text-lg drop-shadow-[0_0_10px_#1EFF00];
   }
 }
+/* styles/globals.css or app/globals.css */
+
+.scrollbar-white::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-white::-webkit-scrollbar-thumb {
+  background-color: white; /* White scroll thumb */
+  border-radius: 9999px;
+}
+
+.scrollbar-white {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: white transparent; /* Firefox: white thumb, transparent track */
+  overflow-y: scroll !important; /* Always show scrollbar */
+}
+
 .scrollbar-hide {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */

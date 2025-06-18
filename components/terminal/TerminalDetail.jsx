@@ -13,6 +13,9 @@ import {
   projectsCommandOutput,
   socialCommandOutput,
   StartCommands,
+  joinCommandOutput,
+  eventsCommandOutput,
+  quotesList,
 } from "@/constants/Terminalconstant";
 import { ProcessTime } from "@/utils/ProcessTime";
 
@@ -25,75 +28,56 @@ export default function TerminalDetail() {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const { register, handleSubmit, reset, setFocus, setValue } = useForm();
   const logsEndRef = useRef(null);
-  const [pwd, setPwd] = useState("");
-
+  const [pwd, setPwd] = useState("Home");
   const [specs, setSpecs] = useState(null);
 
   useEffect(() => {
-    const canvas = document.createElement("canvas");
-    const gl =
-      canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-    const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
+  const canvas = document.createElement("canvas");
+  const gl =
+    canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
 
-    const data = {
-      OS: navigator.platform,
-      UserAgent: navigator.userAgent,
-      CPU_Cores: navigator.hardwareConcurrency || "Unknown",
-      RAM_GB: navigator.deviceMemory || "Unknown",
-      Screen: `${screen.width}x${screen.height}`,
-      GPU: debugInfo
-        ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-        : "Unknown",
-    };
+  const data = {
+    OS: navigator.platform,
+    UserAgent: navigator.userAgent,
+    CPU_Cores: navigator.hardwareConcurrency || "Unknown",
+    RAM_GB: navigator.deviceMemory || "Unknown",
+    Screen: `${screen.width}x${screen.height}`,
+    GPU: debugInfo
+      ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+      : "Unknown",
+  };
 
-    setSpecs(data);
-  }, []);
+  setSpecs(data);
+}, []);
 
   useEffect(() => {
-    setStartTime(Date.now());
+  setStartTime(Date.now());
+  let index = 0;
+  const interval = setInterval(() => {
+    if (index < StartCommands.length) {
+      setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
+      index++;
+    } else {
+      clearInterval(interval);
+    }
+  }, 300); // Speed of appearing commands
 
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < StartCommands.length) {
-        setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 300); // Speed of appearing commands
+  return () => clearInterval(interval);
+}, []);
 
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
     setFocus("command");
   }, [logs, visibleStartCommands, setFocus]);
 
-  const quotes = [
-    "There’s no place like 127.0.0.1. 🏠",
-    "Talk is cheap. Show me the code. – Linus Torvalds",
-    "I don’t care if it works on your machine! We are not shipping your machine! 😜",
-    "To err is human. To really foul things up you need a computer. 🤖",
-    "Why do programmers always mix up Halloween and Christmas? Because Oct 31 == Dec 25.",
-    "A day without coding is like… just kidding, I have no idea. 💻",
-    "Real programmers count from 0.",
-    "I'm not lazy, I'm just highly optimized. ⚙️",
-    "Weeks of coding can save you hours of planning. 🙃",
-    "It compiles? Ship it! 🚢",
-    "If debugging is the process of removing bugs, then programming must be the process of putting them in. 🐞",
-    "Never trust a computer you can’t throw out a window. – Steve Wozniak",
-    "Software and cathedrals are much the same — first we build them, then we pray. 🛐",
-    "There are only two hard things in Computer Science: cache invalidation, naming things, and off-by-one errors.",
-    "Eat. Sleep. Code. Repeat. ☕",
-  ];
-
   const executeCommand = (command) => {
+    // Handle echo commands
     if (command.startsWith("echo ")) {
-      const output = command.slice(5);
-      return [{ type: "output", content: output }];
+      return [{ type: "output", content: command.slice(5) }];
     }
-
+    // Prevent destructive commands
     if (command.includes("rm -rf")) {
       return [
         {
@@ -104,18 +88,46 @@ export default function TerminalDetail() {
       ];
     }
 
+    // If command starts with "start ", handle project descriptions
+    if (command.startsWith("start ")) {
+      const projectName = command.slice(6).trim();
+      switch (projectName) {
+        case "react app":
+          return [
+            {
+              type: "output",
+              content: "description of React App yet to be added.",
+            },
+          ];
+        case "node.js api":
+          return [
+            {
+              type: "output",
+              content: "description of API yet to be added.",
+            },
+          ];
+        case "next.js website":
+          return [
+            {
+              type: "output",
+              content: "description of website yet to be added.",
+            },
+          ];
+        default:
+          return InvalidCommandOutput(command);
+      }
+    }
+
+    // Process known commands via a switch-case
     switch (command) {
       case "help":
         return helpCommandOutput;
       case "ls":
-        switch (dir) {
-          case "projects":
-            return projectsCommandOutput;
-          case "Home":
-            return homeLsOutput;
-          default:
-            return emptyDir;
-        }
+        return pwd === "projects"
+          ? projectsCommandOutput
+          : pwd === "Home"
+          ? homeLsOutput
+          : emptyDir;
       case "cd projects":
         if (pwd === "projects") {
           return [
@@ -161,13 +173,12 @@ export default function TerminalDetail() {
             }`,
           },
         ];
-
       case "about":
         return aboutCommandOutput;
       case "social":
         return socialCommandOutput;
-      case "cls":
       case "clear":
+      case "cls":
         setLogs([]);
         setVisibleStartCommands([]);
         return null;
@@ -184,6 +195,13 @@ export default function TerminalDetail() {
         }));
       case "uptime":
         return [{ type: "output", content: ProcessTime(startTime) }];
+      case "quote":
+        const randomIndex = Math.floor(Math.random() * quotesList.length);
+        return [{ type: "output", content: quotesList[randomIndex] }];
+      case "join":
+        return joinCommandOutput;
+      case "events":
+        return eventsCommandOutput;
       default:
         if (command) {
           return InvalidCommandOutput(command);
@@ -203,7 +221,6 @@ export default function TerminalDetail() {
     }
 
     const command = raw.toLowerCase();
-
     setLogs((prev) => [...prev, { type: "output", content: `>>> ${command}` }]);
 
     if (command === "exit") {
@@ -222,31 +239,32 @@ export default function TerminalDetail() {
   const handleKeyDown = (e) => {
     if (e.key === "ArrowUp") {
       e.preventDefault();
-      if (prevCommands.length === 0) return;
-
-      setHistoryIndex((prevIndex) => {
-        const newIndex = Math.max(prevIndex - 1, 0);
-        const cmd = prevCommands[newIndex]?.command || "";
-        setValue("command", cmd);
+      if (!prevCommands.length) return;
+      setHistoryIndex((prev) => {
+        const newIndex = Math.max(prev - 1, 0);
+        setValue("command", prevCommands[newIndex]?.command || "");
         return newIndex;
       });
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
-      if (prevCommands.length === 0) return;
-
-      setHistoryIndex((prevIndex) => {
-        const newIndex = Math.min(prevIndex + 1, prevCommands.length);
-        const cmd = prevCommands[newIndex]?.command || "";
-        setValue("command", cmd);
+      if (!prevCommands.length) return;
+      setHistoryIndex((prev) => {
+        const newIndex = Math.min(prev + 1, prevCommands.length);
+        setValue("command", prevCommands[newIndex]?.command || "");
         return newIndex;
       });
     }
   };
 
+  const linkMap = {
+    instagram: "https://www.instagram.com/androidvitc/",
+    linkedin: "https://www.linkedin.com/company/android-club-vitc/",
+  };
+
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-black w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
+      className="rounded-3xl bg-[#000700] w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
     >
       <div className="h-full w-full md:w-2/3 overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
         <div
@@ -263,7 +281,6 @@ export default function TerminalDetail() {
           {AndroidClubLogo.content}
         </div>
 
-        {/* Animated Start Commands */}
         {visibleStartCommands.map((log, i) => (
           <motion.div
             key={i}
@@ -276,17 +293,16 @@ export default function TerminalDetail() {
           </motion.div>
         ))}
 
-        {/* Logs after startup */}
         {logs.map((log, i) => (
-          <div
-            key={i}
-            className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
-          >
-            {log.content}
-          </div>
-        ))}
+  <div
+    key={i}
+    className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
+  >
+    {log.content}
+  </div>
+))}
 
-        {/* Terminal input */}
+
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex items-center mt-2 terminal-text"
@@ -303,6 +319,7 @@ export default function TerminalDetail() {
 
         <div ref={logsEndRef} />
       </div>
+
       <div className="h-full hidden right-0 top-0 md:inline-block absolute w-1/3">
         <pre
           style={{
@@ -311,7 +328,7 @@ export default function TerminalDetail() {
               0 0 40px var(--terminal-primary)
             `,
           }}
-          className="bg-black text-terminal-primary  p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
+          className="bg-[#000700] text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
         >
           {!specs
             ? "Fetching system specs..."

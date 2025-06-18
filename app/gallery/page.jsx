@@ -1,11 +1,8 @@
-"use client";
-
 import GalleryDetail from "@/components/gui/apps/GalleryDetail";
-import React from "react";
 
-export default function AboutPage() {
+export default function GalleryPage() {
   return (
-    <div>
+    <div className="h-full">
       <GalleryDetail />
     </div>
   );
