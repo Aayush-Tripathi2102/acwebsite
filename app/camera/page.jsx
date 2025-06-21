@@ -52,7 +52,10 @@ const Camera = () => {
   };
 
   return (
-    <div className="relative w-full h-full bg-black">
+    <motion.div
+      className="relative w-full h-full bg-black"
+      layoutId="camera-page"
+    >
       <AnimatePresence>
         {viewMode === "camera" ? (
           <motion.div
@@ -182,7 +185,7 @@ const Camera = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
