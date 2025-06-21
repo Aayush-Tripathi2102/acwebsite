@@ -11,7 +11,7 @@ const teamMembers = [
     description:
       "Backbone of Android Club, playing a crucial role in bringing our vision to life.",
     avatar: "/team/shola maam.jpg",
-    instagram: "https://instagram.com/denisha",
+    instagram: "https://instagram.com/",
     linkedin: "https://www.linkedin.com/in/dr-shola-usharani-86b7a1a5/",
   },
   {
@@ -39,7 +39,7 @@ const teamMembers = [
       "Strategic minds with unstoppable drive, he keeps the club's spirit alive.",
     avatar: "/team/Aayush.jpg",
     instagram: "https://www.instagram.com/the_atp_world/",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/aayush-tripathi-06288b27b/",
   },
   {
     name: "Aarav Kohli",

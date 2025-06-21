@@ -8,8 +8,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import useIsLargeScreen from "@/hooks/useIsLargeScreen"; // import the hook
 
 export default function Home() {
-
-
   return (
     <div className="h-full w-full p-2 flex justify-center overflow-hidden">
       <div className="grid grid-cols-2 grid-rows-8 lg:grid-cols-5 lg:grid-rows-5 gap-2 w-full h-full">

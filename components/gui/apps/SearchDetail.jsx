@@ -4,61 +4,88 @@ import { useRouter } from "next/navigation";
 
 // Icons
 import { RiInstagramFill } from "react-icons/ri";
-import { AiFillLinkedin, AiOutlineInfoCircle, AiOutlineMail } from "react-icons/ai";
+import {
+  AiFillLinkedin,
+  AiOutlineInfoCircle,
+  AiOutlineMail,
+} from "react-icons/ai";
 import { HiUserGroup } from "react-icons/hi";
 import { VscTerminal } from "react-icons/vsc";
 import { BsImages } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 // App data with real paths
-const apps = [
+const Apps = [
   {
-    name: "About",
-    id: "about",
-    icon: <AiOutlineInfoCircle className="text-yellow-400" />,
-    path: "/about",
+    src: "/gui/InstagramIcon.png",
+    alt: "Instagram",
+    href: "https://instagram.com",
   },
   {
-    name: "Gallery",
-    id: "gallery",
-    icon: <BsImages className="text-purple-400" />,
-    path: "/gallery",
+    src: "/gui/LinkedInIcon.png",
+    alt: "LinkedIn",
+    href: "https://linkedin.com",
   },
   {
-    name: "Mail",
-    id: "mail",
-    icon: <AiOutlineMail className="text-red-400" />,
-    path: "/mail",
+    src: "/gui/AboutIcon.png",
+    alt: "About",
+    href: "/about",
+    layoutId: "about-page",
   },
   {
-    name: "Team",
-    id: "team",
-    icon: <HiUserGroup className="text-green-400" />,
-    path: "/teams",
+    src: "/gui/MailIcon.png",
+    alt: "Mail",
+    href: "/mail",
+    layoutId: "mail-page",
   },
   {
-    name: "Terminal",
-    id: "terminal",
-    icon: <VscTerminal className="text-gray-300" />,
-    path: "/terminal",
+    src: "/gui/GalleryIcon.png",
+    alt: "Gallery",
+    href: "/gallery",
+    layoutId: "gallery-page",
   },
   {
-    name: "Search",
-    id: "search",
-    icon: <FiSearch className="text-white" />,
-    path: "#",
+    src: "/gui/TeamsIcon.png",
+    alt: "Team",
+    href: "/teams",
+    layoutId: "team-page",
   },
   {
-    name: "Instagram",
-    id: "instagram",
-    icon: <RiInstagramFill className="text-pink-500" />,
-    path: "/instagram",
+    src: "/gui/EventsIcon1.png",
+    alt: "Past Events",
+    href: "/past-events",
+    layoutId: "past-events-page",
   },
   {
-    name: "LinkedIn",
-    id: "linkedin",
-    icon: <AiFillLinkedin className="text-blue-600" />,
-    path: "/linkedin",
+    src: "/gui/EventsIcon.png",
+    alt: "New Events",
+    href: "/upcomming-events",
+    layoutId: "upcomming-events-page",
+  },
+  {
+    src: "/gui/CamerIcon.png",
+    alt: "Camera",
+    href: "/camera",
+    layoutId: "camera-page",
+  },
+  {
+    src: "/gui/GithubIcon.png",
+    alt: "GitHub",
+    href: "https://github.com/Android-Club-VITC/",
+    layoutId: "",
+  },
+  {
+    src: "/gui/ContributorsIcon.png",
+    alt: "contributors",
+    href: "/contributors",
+    layoutId: "contributors-page",
+  },
+  {
+    src: "/gui/TerminalIcon.png",
+    alt: "ADB",
+    href: "/terminal",
+    layoutId: "",
   },
 ];
 
@@ -66,12 +93,15 @@ export default function SearchDetail() {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
-  const filteredApps = apps.filter((app) =>
-    app.name.toLowerCase().includes(query.toLowerCase())
+  const filteredApps = Apps.filter((app) =>
+    app.alt.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen bg-black/60 backdrop-blur-md backdrop-saturate-150 text-white p-6 sm:p-10">
+    <motion.div
+      layoutId="search-container"
+      className="min-h-screen backdrop-saturate-150 text-white p-6 sm:p-10"
+    >
       <div className="max-w-xl mx-auto text-center">
         <h1 className="text-3xl font-bold mb-4">Search Applications</h1>
         <input
@@ -83,7 +113,7 @@ export default function SearchDetail() {
         />
       </div>
 
-      <div className="mt-8 flex flex-col items-center gap-4">
+      {/* <div className="mt-8 flex flex-col items-center gap-4">
         {filteredApps.length > 0 ? (
           filteredApps.map((app, index) => (
             <div
@@ -102,7 +132,39 @@ export default function SearchDetail() {
         ) : (
           <p className="text-gray-400">No matching apps found.</p>
         )}
+      </div> */}
+      <div className="w-full h-full p-4 flex flex-col mt-8">
+        <div className="grid grid-cols-4 gap-2 lg:gap-6 place-items-center w-full">
+          {filteredApps.length > 0 ? (
+            filteredApps.map((icon, i) => (
+              <div
+                key={i}
+                className="w-full mt-16 sm:mt-0 flex flex-col items-center justify-center 
+              max-w-[64px] sm:max-w-[72px] lg:max-w-[90px] 
+              transition-transform duration-200 ease-in-out 
+              hover:scale-105 active:scale-95 cursor-pointer rounded-xl"
+                onClick={() => router.push(icon.href)}
+              >
+                <motion.img
+                  src={icon.src}
+                  alt={icon.alt}
+                  layoutId={icon.layoutId}
+                  transition={{
+                    duration: 0.15,
+                    type: "linear",
+                    stiffness: 100,
+                    damping: 1125,
+                  }}
+                  className="w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 object-contain"
+                />
+                <p className="text-[10px] text-center pt-1">{icon.alt}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-400">No matching apps found.</p>
+          )}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
