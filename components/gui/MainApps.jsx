@@ -45,7 +45,7 @@ const Apps = [
   },
   {
     src: "/gui/EventsIcon.png",
-    alt: "Upcomming Events",
+    alt: "New Events",
     href: "/upcomming-events",
     layoutId: "upcomming-events-page",
   },
@@ -67,15 +67,20 @@ const Apps = [
     href: "/contributors",
     layoutId: "contributors-page",
   },
-  { src: "/gui/TerminalIcon.png", alt: "Terminal", href: "#", layoutId: "" },
+  {
+    src: "/gui/TerminalIcon.png",
+    alt: "ADB",
+    href: "/terminal",
+    layoutId: "",
+  },
 ];
 
 const MainApps = () => {
   const router = useRouter();
 
   return (
-    <div className="w-full min-h-[calc(100vh-100px)] p-4 overflow-y-auto">
-      <div className="grid grid-cols-4 gap-2 lg:gap-6 place-items-center w-full">
+    <div className="w-full h-full p-4 flex flex-col">
+      <div className="grid grid-cols-4 gap-2 lg:gap-6 place-items-center w-full grow place-content-evenly">
         {Apps.map((icon, i) => (
           <div
             key={i}
