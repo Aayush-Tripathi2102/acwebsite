@@ -1,8 +1,7 @@
-"use-client";
-import Link from "next/link";
-import React from "react";
-import { animate, motion } from "framer-motion";
+"use client";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+
 const Apps = [
   {
     src: "/gui/InstagramIcon.png",
@@ -38,32 +37,65 @@ const Apps = [
     href: "/teams",
     layoutId: "team-page",
   },
-  { src: "/gui/EmptyIcon.png", alt: "Empty 1", href: "#", layoutId: "" },
-  { src: "/gui/EmptyIcon.png", alt: "Empty 2", href: "#", layoutId: "" },
+  {
+    src: "/gui/EventsIcon1.png",
+    alt: "Past Events",
+    href: "/past-events",
+    layoutId: "past-events-page",
+  },
+  {
+    src: "/gui/EventsIcon.png",
+    alt: "Upcomming Events",
+    href: "/upcomming-events",
+    layoutId: "upcomming-events-page",
+  },
+  {
+    src: "/gui/CamerIcon.png",
+    alt: "Camera",
+    href: "/camera",
+    layoutId: "camera-page",
+  },
+  {
+    src: "/gui/GithubIcon.png",
+    alt: "GitHub",
+    href: "https://github.com/Android-Club-VITC/",
+    layoutId: "",
+  },
+  {
+    src: "/gui/ContributorsIcon.png",
+    alt: "contributors",
+    href: "/contributors",
+    layoutId: "contributors-page",
+  },
+  { src: "/gui/TerminalIcon.png", alt: "Terminal", href: "#", layoutId: "" },
 ];
 
 const MainApps = () => {
   const router = useRouter();
+
   return (
-    <div className="w-full h-full p-4">
-      <div className="grid grid-cols-4 sm:grid-cols-4 gap-4  place-items-center h-full w-full">
+    <div className="w-full min-h-[calc(100vh-100px)] p-4 overflow-y-auto">
+      <div className="grid grid-cols-4 gap-2 lg:gap-6 place-items-center w-full">
         {Apps.map((icon, i) => (
           <div
             key={i}
-            className="w-20 h-20 flex flex-col mb-5 items-center justify-center p-3 md:p-0 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95 cursor-pointer rounded-xl"
+            className="w-full flex flex-col items-center justify-center 
+              max-w-[64px] sm:max-w-[72px] lg:max-w-[90px] 
+              transition-transform duration-200 ease-in-out 
+              hover:scale-105 active:scale-95 cursor-pointer rounded-xl"
+            onClick={() => router.push(icon.href)}
           >
             <motion.img
+              src={icon.src}
+              alt={icon.alt}
+              layoutId={icon.layoutId}
               transition={{
                 duration: 0.15,
                 type: "linear",
                 stiffness: 100,
                 damping: 1125,
               }}
-              layoutId={icon.layoutId}
-              onClick={() => router.push(icon.href)}
-              src={icon.src}
-              alt={icon.alt}
-              className="w-12 h-12 object-contain cursor-pointer"
+              className="w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 object-contain"
             />
             <p className="text-[10px] text-center pt-1">{icon.alt}</p>
           </div>
