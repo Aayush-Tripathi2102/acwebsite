@@ -7,7 +7,7 @@ export default function SearchDetail() {
   return (
     <motion.div
       layoutId="search-container"
-      className="absolute inset-0 w-full h-full bg-black p-6 border rounded-2xl border-black"
+      className="absolute inset-0 w-full h-full p-6 border rounded-2xl border-black"
     >
       <motion.div
         layoutId="search-box"

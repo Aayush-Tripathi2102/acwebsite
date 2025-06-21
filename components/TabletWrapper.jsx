@@ -25,13 +25,28 @@ const TabletWrapper = ({ children }) => {
         >
           <div
             className="
-            bg-background h-full w-full
+            h-full w-full
             border-0 rounded-[24px] sm:rounded-[36px]
-            p-3 sm:p-5 relative
+            relative overflow-hidden
           "
           >
-            {children}
-            <GestureBackButton />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: "url(/deviceBg.png)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                filter: "blur(2px)",
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ backgroundColor: "rgba(0, 0, 10, 0.7)" }}
+            />
+            <div className="relative h-full w-full p-3 sm:p-5">
+              {children}
+              <GestureBackButton />
+            </div>
           </div>
         </div>
       </div>

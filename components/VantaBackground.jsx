@@ -15,28 +15,26 @@ export default function VantaBackground() {
           document.head.appendChild(threeScript);
 
           threeScript.onload = () => {
-            // Then load Vanta FOG
+            // Then load Vanta WAVES
             const vantaScript = document.createElement("script");
             vantaScript.src =
-              "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js";
+              "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js";
             document.head.appendChild(vantaScript);
 
             vantaScript.onload = () => {
               if (window.VANTA) {
-                window.VANTA.FOG({
+                window.VANTA.WAVES({
                   el: vantaRef.current,
-                  mouseControls: true,
-                  touchControls: true,
+                  mouseControls: false,
+                  touchControls: false,
                   gyroControls: false,
                   minHeight: 200.0,
                   minWidth: 200.0,
-                  highlightColor: 0x1eff00,
-                  midtoneColor: 0x0a0a0a,
-                  lowlightColor: 0x000000,
-                  baseColor: 0x0a0a0a,
-                  blurFactor: 0.9,
-                  speed: 1.0,
-                  zoom: 1.0,
+                  scale: 1.0,
+                  scaleMobile: 1.0,
+                  color: 0x6b00,
+                  waveSpeed: 0.55,
+                  zoom: 1.8,
                 });
               }
             };
