@@ -43,7 +43,7 @@ const TabletWrapper = ({ children }) => {
               className="absolute inset-0"
               style={{ backgroundColor: "rgba(0, 0, 10, 0.7)" }}
             />
-            <div className="relative h-full w-full p-3 sm:p-5">
+            <div className="relative h-full w-full ">
               {children}
               <GestureBackButton />
             </div>
