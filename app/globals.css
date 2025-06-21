@@ -8,8 +8,10 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #171717;
+  --foreground: #ffffff;
+  --terminal-primary: #1eff00;
+  --tablet-border: #8c8f98;
 }
 
 @theme inline {
@@ -18,15 +20,6 @@
   --font-poppins: Roboto, sans-serif;
   --color-terminal-primary: var(--terminal-primary);
   --color-tablet-border: var(--tablet-border);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #123456;
-    --foreground: #ededed;
-    --terminal-primary: #1eff00;
-    --tablet-border: #8c8f98;
-  }
 }
 
 body {
