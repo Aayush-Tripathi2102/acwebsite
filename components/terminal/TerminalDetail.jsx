@@ -32,38 +32,40 @@ export default function TerminalDetail() {
   const [specs, setSpecs] = useState(null);
 
   useEffect(() => {
-    function getSpecs() {
-      const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-      const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
+  const canvas = document.createElement("canvas");
+  const gl =
+    canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
 
-      const data = {
-        OS: navigator.platform,
-        UserAgent: navigator.userAgent,
-        CPU_Cores: navigator.hardwareConcurrency || "Unknown",
-        RAM_GB: navigator.deviceMemory || "Unknown",
-        Screen: `${screen.width}x${screen.height}`,
-        GPU: debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : "Unknown",
-      };
+  const data = {
+    OS: navigator.platform,
+    UserAgent: navigator.userAgent,
+    CPU_Cores: navigator.hardwareConcurrency || "Unknown",
+    RAM_GB: navigator.deviceMemory || "Unknown",
+    Screen: `${screen.width}x${screen.height}`,
+    GPU: debugInfo
+      ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+      : "Unknown",
+  };
 
-      setSpecs(data);
-    }
-    getSpecs();
-  }, []);
+  setSpecs(data);
+}, []);
 
   useEffect(() => {
-    setStartTime(Date.now());
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < StartCommands.length) {
-        setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
+  setStartTime(Date.now());
+  let index = 0;
+  const interval = setInterval(() => {
+    if (index < StartCommands.length) {
+      setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
+      index++;
+    } else {
+      clearInterval(interval);
+    }
+  }, 300); // Speed of appearing commands
+
+  return () => clearInterval(interval);
+}, []);
+
 
   useEffect(() => {
     logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -121,8 +123,20 @@ export default function TerminalDetail() {
       case "help":
         return helpCommandOutput;
       case "ls":
-        return pwd === "projects" ? projectsCommandOutput : pwd === "Home" ? homeLsOutput : emptyDir;
+        return pwd === "projects"
+          ? projectsCommandOutput
+          : pwd === "Home"
+          ? homeLsOutput
+          : emptyDir;
       case "cd projects":
+        if (pwd === "projects") {
+          return [
+            {
+              type: "output",
+              content: "fatal error : no directory found",
+            },
+          ];
+        }
         setPwd("projects");
         return;
       case "cd ..":
@@ -130,14 +144,34 @@ export default function TerminalDetail() {
         return;
       case "neofetch":
         return [
-          { type: "output", content: `User Agent     : ${navigator.userAgent}` },
+          {
+            type: "output",
+            content: `User Agent     : ${navigator.userAgent}`,
+          },
           { type: "output", content: `Platform       : ${navigator.platform}` },
           { type: "output", content: `Language       : ${navigator.language}` },
-          { type: "output", content: `Online         : ${navigator.onLine ? "Yes" : "No"}` },
-          { type: "output", content: `Screen Size    : ${window.screen.width}x${window.screen.height}` },
-          { type: "output", content: `Window Size    : ${window.innerWidth}x${window.innerHeight}` },
-          { type: "output", content: `Device Memory  : ${navigator.deviceMemory ?? "N/A"} GB` },
-          { type: "output", content: `CPU Cores      : ${navigator.hardwareConcurrency ?? "N/A"}` },
+          {
+            type: "output",
+            content: `Online         : ${navigator.onLine ? "Yes" : "No"}`,
+          },
+          {
+            type: "output",
+            content: `Screen Size    : ${window.screen.width}x${window.screen.height}`,
+          },
+          {
+            type: "output",
+            content: `Window Size    : ${window.innerWidth}x${window.innerHeight}`,
+          },
+          {
+            type: "output",
+            content: `Device Memory  : ${navigator.deviceMemory ?? "N/A"} GB`,
+          },
+          {
+            type: "output",
+            content: `CPU Cores      : ${
+              navigator.hardwareConcurrency ?? "N/A"
+            }`,
+          },
         ];
       case "about":
         return aboutCommandOutput;
@@ -230,7 +264,7 @@ export default function TerminalDetail() {
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-black w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
+      className="rounded-3xl bg-[#000700] w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
     >
       <div className="h-full w-full md:w-2/3 overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
         <div
@@ -260,36 +294,19 @@ export default function TerminalDetail() {
         ))}
 
         {logs.map((log, i) => (
-          <div
-            key={i}
-            className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
-          >
-            {pwd === "Home" &&
-            typeof logs[i - 1]?.content === "string" &&
-            logs[i - 1].content.toLowerCase().includes(">>> ls") &&
-            typeof log.content === "string"
-              ? log.content.split(" ").map((item, index) =>
-                  linkMap[item] ? (
-                    <a
-                      key={index}
-                      href={linkMap[item]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline text-blue-400 hover:text-blue-600 mx-1"
-                    >
-                      {item}
-                    </a>
-                  ) : (
-                    <span key={index} className="mx-1">
-                      {item}
-                    </span>
-                  )
-                )
-              : log?.content}
-          </div>
-        ))}
+  <div
+    key={i}
+    className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
+  >
+    {log.content}
+  </div>
+))}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center mt-2 terminal-text">
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex items-center mt-2 terminal-text"
+        >
           <span className="mr-1">{">>>"} </span>
           <input
             {...register("command")}
@@ -311,7 +328,7 @@ export default function TerminalDetail() {
               0 0 40px var(--terminal-primary)
             `,
           }}
-          className="bg-black text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
+          className="bg-[#000700] text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
         >
           {!specs
             ? "Fetching system specs..."

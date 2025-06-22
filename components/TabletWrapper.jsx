@@ -1,9 +1,11 @@
 import React from "react";
 import GestureBackButton from "./GestureBackButton";
+import VantaBackground from "./VantaBackground";
 
 const TabletWrapper = ({ children }) => {
   return (
-    <div className="h-screen w-screen flex items-center justify-center bg-[#191919] overflow-hidden">
+    <div className="h-screen w-screen flex items-center justify-center overflow-hidden">
+      <VantaBackground />
       <div
         className="
           m-4 sm:m-0
@@ -23,13 +25,28 @@ const TabletWrapper = ({ children }) => {
         >
           <div
             className="
-            bg-background h-full w-full
+            h-full w-full
             border-0 rounded-[24px] sm:rounded-[36px]
-            p-3 sm:p-5 relative
+            relative overflow-hidden
           "
           >
-            {children}
-            <GestureBackButton />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: "url(/deviceBg.png)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                filter: "blur(2px)",
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ backgroundColor: "rgba(0, 0, 10, 0.7)" }}
+            />
+            <div className="relative h-full w-full ">
+              {children}
+              <GestureBackButton />
+            </div>
           </div>
         </div>
       </div>

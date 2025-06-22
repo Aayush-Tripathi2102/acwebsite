@@ -1,162 +1,142 @@
 "use client";
 import React, { useRef } from "react";
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function AboutDetail() {
   const scrollRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: scrollRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
   });
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
   return (
     <motion.div
       layoutId="about-page"
-      className="rounded-3xl bg-black w-full h-full absolute inset-0 overflow-hidden"
+      className="absolute inset-0 overflow-y-scroll rounded-[24px] sm:rounded-[36px] p-6 sm:p-10"
     >
-      <style jsx global>{`
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-          background: #111827;
-          border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-          background: rgb(26, 27, 26);
-          border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-          background: rgb(38, 35, 44);
-        }
-        * {
-          scrollbar-width: thin;
-          scrollbar-color: rgb(25, 26, 25) #111827;
-        }
-        @font-face {
-          font-family: 'OCRAEXT';
-          src: url('/font/OCRAEXT.ttf') format('truetype');
-          font-weight: normal;
-          font-style: normal;
-        }
-        @font-face {
-          font-family: 'VCR OSD Mono';
-          src: url('/font/VCR_OSD_MONO_1.001.ttf') format('truetype');
-          font-weight: normal;
-          font-style: normal;
-        }
-        @font-face {
-          font-family: 'Fira Code';
-          src: url('/font/fira-code.ttf') format('truetype');
-          font-weight: normal;
-          font-style: normal;
-        }
-      `}</style>
+      {/* Blurred/gradient background */}
+      <div className="absolute inset-0 z-0 rounded">
+        <div className="w-full h-full bg-gradient-to-br from-[#23243a] via-[#1a1b26] to-[#23243a]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_40%,rgba(255,255,255,0.08)_0%,transparent_70%)] blur-2xl"></div>
+      </div>
 
-      <div
-        ref={scrollRef}
-        className="w-full h-full flex-col overflow-y-auto overflow-x-hidden items-center justify-center bg-[#111827] rounded-[25px]"
-      >
-        {/* Laptop and Web Dev text - Fixed at top right */}
-        <div className="w-full relative">
+      {/* Glassy nav */}
+
+      {/* Main glassmorphism card */}
+      <div className=" z-10 max-w-4xl mx-auto  rounded-3xl bg-white/10 backdrop-blur-md shadow-2xl border border-white/20">
+        <div className="flex flex-col gap-8 items-center">
           <img
             src="/gui/logo.png"
             alt="Android Club Logo"
-            className="absolute top-20 left-10 w-[120px]"
+            className="w-24 mb-2"
           />
-
-          <img
-            src="/gui/laptop.png"
-            alt="Laptop"
-            className="w-[470px] absolute top-0 right-[-22%] mt-30 opacity-25"
-          />
-          <div className="absolute top-[10%] right-[5%] text-right">
-            <h1
-              className="text-[36px] tracking-widest text-gray-400 mt-90 mr-[-5%]"
-              style={{ fontFamily: 'VCR OSD Mono' }}
-            >
-              Web Dev and Hackathons
-            </h1>
-          </div>
-        </div>
-
-        {/* Bot + Caption + H2 */}
-        <div className="w-full flex items-start justify-between px-[5%] mt-[340px]">
-          {/* Bot and caption below it */}
-          <div className="relative w-[450px] -ml-[170px]">
-            <img
-              src="/gui/bot.png"
-              alt="Bot"
-              className="w-full opacity-30 transform -scale-x-100 mt-15"
-            />
-            <p
-              className="text-[36px] w-150 text-gray-400 text-left ml-35"
-              style={{ fontFamily: 'VCR OSD Mono' }}
-            >
-              Android Apps and AIML <br /> projects
-            </p>
-          </div>
-
-          {/* Main heading */}
-          <div className="text-center mr-[5%]">
-            <h2
-              className="text-[80px] text-[#1EFF00] tracking-tighter leading-none mt-30"
-              style={{
-                fontFamily: 'OCRAEXT',
-                fontFeatureSettings: '"tnum" on, "lnum" on'
-              }}
-            >
-              Android<br />Club<br />VIT<br /> CHENNAI
-            </h2>
-          </div>
-        </div>
-
-        <div className="flex justify-center gap-6 mt-20 mb-20 flex-wrap">
-          <div
-            className="border-4 border-[#1EFF00] px-14 py-8 bg-[#000000] rounded-[20%] text-white text-center flex flex-col items-center"
-            style={{ fontFamily: 'VCR OSD Mono' }}
+          <h1
+            className="text-5xl md:text-7xl font-bold text-white/90 leading-tight text-center"
+            style={{ fontFamily: "OCRAEXT" }}
           >
-            <span className="text-[24px]  mb-2">x+</span>
-            <span className="text-[20px]">projects</span>
+            Android Club{" "}
+            <span className="block text-white/60 font-normal text-3xl md:text-5xl mt-2">
+              VIT Chennai
+            </span>
+          </h1>
+          <div className="flex flex-col sm:flex-row gap-4 mb-4">
+            <button className="px-5 py-2 rounded-full bg-white/10 border border-white/20 text-white/80 shadow hover:bg-white/20 transition font-medium">
+              Available for collaboration
+            </button>
+            <button className="px-5 py-2 rounded-full bg-white/10 border border-white/20 text-white/80 shadow hover:bg-white/20 transition font-medium">
+              Get in touch
+            </button>
           </div>
-
-          <div
-            className="border-4 border-[#1EFF00] px-10 py-6 rounded-[20%] bg-[#000000] text-white text-center flex flex-col items-center"
-            style={{ fontFamily: 'VCR OSD Mono' }}
-          >
-            <span className="text-[24px] mb-2">y+</span>
-            <span className="text-[16px]">competitions</span>
-          </div>
-
-          <div
-            className="border-4 border-[#1EFF00] px-14 py-8 rounded-[20%] bg-[#000000]  text-white text-center flex flex-col items-center"
-            style={{ fontFamily: 'VCR OSD Mono' }}
-          >
-            <span className="text-[24px] mb-2">z+</span>
-            <span className="text-[20px]">winners</span>
-          </div>
-        </div>
-
-        {/* Description Paragraph */}
-        <div className="text-[23px] text-justify text-gray-300 px-2 leading-relaxed" style={{ fontFamily: 'Fira Code' }}>
-          <p className="mb-0 ml-10 mr-10">
-            Lorem ipsum dolor sit, consectetur adipiscing elit.
-            Pellentesque commodo est vel turpis venenatis, ac sollicitudin nulla hendrerit.
-            Pellentesque sit amet sapien fringilla, mattis ligula at, consectetur ultricies mauris.
-            Nullam quis imperdiet augue. Praesent lorem orci, mattis non efficitur id, ultricies vel nibh.
-            Sed volutpat lacus vitae gravida viverra. Duis nec tortor vel, egestas ullamcorper dui.
-            Curabitur at risus sodales, ultricies velit id, sodales justo.
-          </p>
-          <p className="mb-30 ml-10 mr- mt-6">
-            Quisque a neque pretium, dictum tellus vitae, euismod neque.
-            Nulla facilisi. Duis tempus erat eu metus aliquet dapibus.
-            Integer a tortor vitae velit fermentum luctus.
-            Suspendisse convallis nec urna id dapibus.
-            Fusce tincidunt congue sapien, ut ornare ipsum.
-            Vivamus sodales feugiat justo in bibendum.
+          <p className="text-lg text-white/70 text-center max-w-2xl">
+            We are a passionate community of developers, designers, and
+            innovators at VIT Chennai. Our mission is to empower students
+            through technology, creativity, and collaboration—building
+            real-world projects, hosting hackathons, and fostering growth in
+            Android, web, and AI/ML domains.
           </p>
         </div>
       </div>
+
+      {/* Stats Section */}
+      <div className="relative z-10 max-w-4xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
+          <span className="text-4xl font-bold text-green-400 mb-2 block">
+            50+
+          </span>
+          <span className="text-white/80 font-medium">Projects</span>
+        </div>
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
+          <span className="text-4xl font-bold text-green-400 mb-2 block">
+            20+
+          </span>
+          <span className="text-white/80 font-medium">Competitions</span>
+        </div>
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
+          <span className="text-4xl font-bold text-green-400 mb-2 block">
+            30+
+          </span>
+          <span className="text-white/80 font-medium">Winners</span>
+        </div>
+      </div>
+
+      {/* About/Features Section */}
+      <div className="relative z-10 max-w-5xl mx-auto mt-20 mb-24 grid grid-cols-1 md:grid-cols-2 gap-10 px-4">
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow flex flex-col gap-4">
+          <h2
+            className="text-2xl font-bold text-green-400 mb-2"
+            style={{ fontFamily: "VCR OSD Mono" }}
+          >
+            What We Do
+          </h2>
+          <ul
+            className="text-white/80 text-lg space-y-2 list-disc list-inside"
+            style={{ fontFamily: "Fira Code" }}
+          >
+            <li>Workshops, hackathons, and mentorship programs</li>
+            <li>Android, web, and AI/ML project development</li>
+            <li>Fun events and games for community bonding</li>
+            <li>Design, management, and social media initiatives</li>
+          </ul>
+        </div>
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow flex flex-col gap-4">
+          <h2
+            className="text-2xl font-bold text-green-400 mb-2"
+            style={{ fontFamily: "VCR OSD Mono" }}
+          >
+            Our Mission
+          </h2>
+          <p
+            className="text-white/80 text-lg"
+            style={{ fontFamily: "Fira Code" }}
+          >
+            To inspire and empower the next generation of tech leaders by
+            providing a platform for learning, collaboration, and innovation. We
+            believe in the power of community and strive to make technology
+            accessible and exciting for all.
+          </p>
+        </div>
+      </div>
+
+      <style jsx global>{`
+        ::-webkit-scrollbar {
+          width: 8px;
+          background: transparent;
+        }
+        ::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: transparent;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: transparent;
+        }
+        * {
+          scrollbar-width: none;
+        }
+      `}</style>
     </motion.div>
   );
 }
