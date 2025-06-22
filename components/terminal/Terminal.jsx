@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { Typewriter } from "react-simple-typewriter";
 
 const Terminal = () => {
   const router = useRouter();
@@ -80,8 +81,20 @@ const Terminal = () => {
         </pre>
       </div>
 
-      <h1 className="terminal-text text-[10px] md:text-[13px] font-[400px] px-[23px] mt-[10px] md:mt-[30px]">
-        Hello it’s good to have you here
+      <h1 className="text-terminal-primary terminal-text text-[10px] md:text-[13px] font-[400] px-[23px] mt-[10px] md:mt-[30px]">
+        <Typewriter
+          words={[
+            "Tap to launch terminal",
+            "Access commands here",
+            "Explore the Android Club",
+          ]}
+          loop={true}
+          cursor
+          cursorStyle="_"
+          typeSpeed={70}
+          deleteSpeed={50}
+          delaySpeed={1500}
+        />
       </h1>
     </motion.div>
   );
