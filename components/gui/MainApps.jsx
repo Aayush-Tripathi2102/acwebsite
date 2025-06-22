@@ -6,12 +6,12 @@ const Apps = [
   {
     src: "/gui/InstagramIcon.png",
     alt: "Instagram",
-    href: "https://instagram.com",
+    href: "https://instagram.com/androidvitc",
   },
   {
     src: "/gui/LinkedInIcon.png",
     alt: "LinkedIn",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/company/android-club-vitc/",
   },
   {
     src: "/gui/AboutIcon.png",

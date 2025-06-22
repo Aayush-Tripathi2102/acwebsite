@@ -39,14 +39,16 @@ export default function TerminalDetail() {
       const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
 
       const data = {
-        OS: navigator.platform,
-        UserAgent: navigator.userAgent,
-        CPU_Cores: navigator.hardwareConcurrency || "Unknown",
-        RAM_GB: navigator.deviceMemory || "Unknown",
-        Screen: `${screen.width}x${screen.height}`,
-        GPU: debugInfo
-          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-          : "Unknown",
+        OS: "Android 14 (Rooted, obviously)",
+        UserAgent:
+          "Dalvik/2.1.0 (Linux; U; Android 14; Pixel Club Edition Build/ANDROIDCLUB2025)",
+        CPU_Cores: 8,
+        RAM_GB: 12,
+        Screen: "2400x1080 AMOLED (Notch-free, unlike *some*)",
+        GPU: "Adreno 740 (can run Doom and your fridge)",
+        Battery: "96% (because Androids know how to manage power)",
+        ClubAccess: "Verified Android Enthusiast",
+        Note: "iOS tried joining but couldn’t find the back button",
       };
 
       setSpecs(data);
@@ -366,7 +368,7 @@ export default function TerminalDetail() {
         </div>
 
         {/* RIGHT PANE */}
-        <div className="w-1/3 p-4 text-[1px] text-[var(--terminal-primary)] hidden lg:block">
+        <div className="w-2/3 p-4 text-[1px] text-[var(--terminal-primary)] hidden lg:block">
           <pre
             style={{
               textShadow: `

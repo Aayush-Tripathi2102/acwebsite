@@ -81,11 +81,12 @@ const Terminal = () => {
         </pre>
       </div>
 
-      <h1 className="text-terminal-primary terminal-text text-[10px] md:text-[13px] font-[400] px-[23px] mt-[10px] md:mt-[30px]">
+      <h1 className="text-terminal-primary terminal-text text-[10px] md:text-[16px] font-[400] px-[23px] mt-[10px] md:mt-[30px]">
         <Typewriter
           words={[
             "Tap to launch terminal",
             "Access commands here",
+            "No hidden commands here. Promise.",
             "Explore the Android Club",
           ]}
           loop={true}
