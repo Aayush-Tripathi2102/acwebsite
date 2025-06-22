@@ -32,51 +32,65 @@ export default function TerminalDetail() {
   const [specs, setSpecs] = useState(null);
 
   useEffect(() => {
-  const canvas = document.createElement("canvas");
-  const gl =
-    canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-  const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
+    function getSpecs() {
+      const canvas = document.createElement("canvas");
+      const gl =
+        canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
 
-  const data = {
-    OS: navigator.platform,
-    UserAgent: navigator.userAgent,
-    CPU_Cores: navigator.hardwareConcurrency || "Unknown",
-    RAM_GB: navigator.deviceMemory || "Unknown",
-    Screen: `${screen.width}x${screen.height}`,
-    GPU: debugInfo
-      ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-      : "Unknown",
-  };
+      const data = {
+        OS: "Android 14 (Rooted, obviously)",
+        UserAgent:
+          "Dalvik/2.1.0 (Linux; U; Android 14; Pixel Club Edition Build/ANDROIDCLUB2025)",
+        CPU_Cores: 8,
+        RAM_GB: 12,
+        Screen: "2400x1080 AMOLED (Notch-free, unlike *some*)",
+        GPU: "Adreno 740 (can run Doom and your fridge)",
+        Battery: "96% (because Androids know how to manage power)",
+        ClubAccess: "Verified Android Enthusiast",
+        Note: "iOS tried joining but couldn’t find the back button",
+      };
 
-  setSpecs(data);
-}, []);
+      setSpecs(data);
+    }
+    getSpecs();
+  }, []);
 
   useEffect(() => {
-  setStartTime(Date.now());
-  let index = 0;
-  const interval = setInterval(() => {
-    if (index < StartCommands.length) {
-      setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
-      index++;
-    } else {
-      clearInterval(interval);
-    }
-  }, 300); // Speed of appearing commands
-
-  return () => clearInterval(interval);
-}, []);
-
+    setStartTime(Date.now());
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < StartCommands.length) {
+        setVisibleStartCommands((prev) => [...prev, StartCommands[index]]);
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
     setFocus("command");
   }, [logs, visibleStartCommands, setFocus]);
 
+  const [notification, setNotification] = useState(null);
+
   const executeCommand = (command) => {
     // Handle echo commands
-    if (command.startsWith("echo ")) {
-      return [{ type: "output", content: command.slice(5) }];
+    if (command.startsWith("notification ")) {
+      const msg = command.slice(13);
+      setNotification(msg); // trigger notification
+      setTimeout(() => setNotification(null), 2000); // remove after 2s
+      return [{ type: "output", content: msg }];
     }
+
+    if (command.startsWith("echo ")) {
+      const msg = command.slice(5);
+      return [{ type: "output", content: msg }];
+    }
+
     // Prevent destructive commands
     if (command.includes("rm -rf")) {
       return [
@@ -129,14 +143,6 @@ export default function TerminalDetail() {
           ? homeLsOutput
           : emptyDir;
       case "cd projects":
-        if (pwd === "projects") {
-          return [
-            {
-              type: "output",
-              content: "fatal error : no directory found",
-            },
-          ];
-        }
         setPwd("projects");
         return;
       case "cd ..":
@@ -264,78 +270,121 @@ export default function TerminalDetail() {
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-[#000700] w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
+      className="rounded-3xl bg-black w-full h-full flex absolute inset-0 m-auto overflow-hidden shadow-2xl terminal-input"
     >
-      <div className="h-full w-full md:w-2/3 overflow-y-auto p-4 font-mono text-[1px] text-[var(--terminal-primary)] scrollbar-hide">
-        <div
-          className="terminal-text text-[4px] leading-[5px] my-4 whitespace-pre-wrap break-words"
-          style={{
-            textShadow: `
+      {notification && (
+        <div className="fixed top-24 left-1/2 w-1/4 transform -translate-x-1/2 z-50">
+          <div className="animate-slideFade backdrop-blur-md bg-black/60 border border-green-500 text-green-300 px-6 py-3 rounded-2xl shadow-2xl text-sm font-semibold flex items-center space-x-2">
+            <svg
+              className="w-4 h-4 text-green-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M9 2a7 7 0 100 14A7 7 0 009 2zm1 10H8v-1h2v1zm0-2H8V6h2v4z" />
+            </svg>
+            <span>{notification}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Scrollable wrapper for both left and right */}
+      <div className="flex w-full h-full overflow-y-auto scrollbar-hide">
+        {/* LEFT PANE */}
+        <div className="w-full md:w-2/3 p-4 text-[1px] text-[var(--terminal-primary)]">
+          <div
+            className="terminal-text text-[4px] leading-[5px] my-4 whitespace-pre-wrap break-words"
+            style={{
+              textShadow: `
               0 0 10px var(--terminal-primary),
               0 0 10px var(--terminal-primary),
               0 0 10px var(--terminal-primary),
               0 0 40px var(--terminal-primary)
             `,
-          }}
-        >
-          {AndroidClubLogo.content}
+            }}
+          >
+            {AndroidClubLogo.content}
+          </div>
+
+          {visibleStartCommands.map((log, i) => (
+            <motion.div
+              key={i}
+              className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {log?.content}
+            </motion.div>
+          ))}
+
+          {logs.map((log, i) => (
+            <div
+              key={i}
+              className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
+            >
+              {pwd === "Home" &&
+              typeof logs[i - 1]?.content === "string" &&
+              logs[i - 1].content.toLowerCase().includes(">>> ls") &&
+              typeof log.content === "string"
+                ? log.content.split(" ").map((item, index) =>
+                    linkMap[item] ? (
+                      <a
+                        key={index}
+                        href={linkMap[item]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline text-blue-400 hover:text-blue-600 mx-1"
+                      >
+                        {item}
+                      </a>
+                    ) : (
+                      <span key={index} className="mx-1">
+                        {item}
+                      </span>
+                    )
+                  )
+                : log?.content}
+            </div>
+          ))}
+
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex items-center mt-2 terminal-text"
+          >
+            <span className="mr-1 text-[13px] md:text-[17px]">{">>>"} </span>
+            <span className="text-[13px] md:text-[17px]">
+              {pwd == "Home" ? "/" : pwd + "/"}
+            </span>
+            <input
+              {...register("command")}
+              className="bg-transparent flex-grow outline-none text-[13px] md:text-[17px] caret-[var(--terminal-primary)] terminal-text selection:text-white"
+              autoComplete="off"
+              spellCheck="false"
+              onKeyDown={handleKeyDown}
+            />
+          </form>
+
+          <div ref={logsEndRef} />
         </div>
 
-        {visibleStartCommands.map((log, i) => (
-          <motion.div
-            key={i}
-            className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            {log?.content}
-          </motion.div>
-        ))}
-
-        {logs.map((log, i) => (
-  <div
-    key={i}
-    className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
-  >
-    {log.content}
-  </div>
-))}
-
-
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex items-center mt-2 terminal-text"
-        >
-          <span className="mr-1">{">>>"} </span>
-          <input
-            {...register("command")}
-            className="bg-transparent flex-grow outline-none caret-[var(--terminal-primary)] terminal-text selection:text-white"
-            autoComplete="off"
-            spellCheck="false"
-            onKeyDown={handleKeyDown}
-          />
-        </form>
-
-        <div ref={logsEndRef} />
-      </div>
-
-      <div className="h-full hidden right-0 top-0 md:inline-block absolute w-1/3">
-        <pre
-          style={{
-            textShadow: `
+        {/* RIGHT PANE */}
+        <div className="w-2/3 p-4 text-[1px] text-[var(--terminal-primary)] hidden lg:block">
+          <pre
+            style={{
+              textShadow: `
               0 0 10px var(--terminal-primary),
               0 0 40px var(--terminal-primary)
             `,
-          }}
-          className="bg-[#000700] text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
-        >
-          {!specs
-            ? "Fetching system specs..."
-            : Object.entries(specs)
-                .map(([key, val]) => `${key}: ${val}\n`)
-                .join("")}
-        </pre>
+            }}
+            className="bg-black text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
+          >
+            {!specs
+              ? "Fetching system specs..."
+              : Object.entries(specs)
+                  .map(([key, val]) => `${key}: ${val}\n`)
+                  .join("")}
+          </pre>
+        </div>
       </div>
     </motion.div>
   );

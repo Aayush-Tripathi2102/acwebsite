@@ -68,3 +68,54 @@ body {
   background-color: white;
   color: black;
 }
+
+@keyframes slideFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+.animate-slideFade {
+  animation: slideFade 2s ease-in-out forwards;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blinkCursor {
+  0%,
+  100% {
+    border-color: green;
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 2px solid green;
+  white-space: nowrap;
+  width: 0;
+  animation: typewriter 3s steps(24, end) 1s forwards,
+    blinkCursor 0.8s step-end infinite;
+}

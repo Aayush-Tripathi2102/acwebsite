@@ -1,5 +1,28 @@
+import Link from "next/link";
+
 export const helpCommandOutput = [
   { type: "output", content: "Available commands:" },
+  { type: "output", content: "  cd - to change present working directory" },
+  {
+    type: "output",
+    content: "  ls - to show the contents of present working directory",
+  },
+  {
+    type: "output",
+    content: "  pwd - to show the present working directory",
+  },
+  {
+    type: "output",
+    content: "  echo - to print string",
+  },
+  {
+    type: "output",
+    content: "  notification - to display notification",
+  },
+  {
+    type: "output",
+    content: "  start - to run any application",
+  },
   { type: "output", content: "  projects - see our projects" },
   { type: "output", content: "  about    - learn about us" },
   { type: "output", content: "  social   - view our social media" },
@@ -50,25 +73,130 @@ export const homeLsOutput = [
       </span>
     ),
   },
-  { type: "output", content: "- About" },
-  { type: "output", content: "- Mail" },
-  { type: "output", content: "- Photos" },
-  { type: "output", content: "- Teams" },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/about" className="underline hover:text-blue-400">
+          About
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/mail" className="underline hover:text-blue-400">
+          Mail
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/gallery" className="underline hover:text-blue-400">
+          Gallery
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/teams" className="underline hover:text-blue-400">
+          Teams
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/past-events" className="underline hover:text-blue-400">
+          Past Events
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link
+          href="/upcomming-events"
+          className="underline hover:text-blue-400"
+        >
+          New Events
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/camera" className="underline hover:text-blue-400">
+          Camera
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/github" className="underline hover:text-blue-400">
+          Github
+        </Link>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <Link href="/contributors" className="underline hover:text-blue-400">
+          Contributors
+        </Link>
+      </span>
+    ),
+  },
 ];
 
-export const emptyDir = [{ type: "output", content: "The directory is empty." }];
+export const emptyDir = [
+  { type: "output", content: "The directory is empty." },
+];
 
 export const aboutCommandOutput = [
   { type: "output", content: "About Us:" },
   {
     type: "output",
-    content: "  We are a team of developers passionate about building web applications.",
+    content:
+      "  We are a team of developers passionate about building web applications.",
   },
   {
     type: "output",
-    content: "  Our mission is to create user-friendly and efficient software solutions.",
+    content:
+      "  Our mission is to create user-friendly and efficient software solutions.",
   },
-  { type: "output", content: "  We believe in continuous learning and improvement." },
+  {
+    type: "output",
+    content: "  We believe in continuous learning and improvement.",
+  },
 ];
 
 export const socialCommandOutput = [
@@ -79,7 +207,10 @@ export const socialCommandOutput = [
 ];
 
 export const eventsCommandOutput = [
-  { type: "output", content: "These are the upcoming events of the Android club:" },
+  {
+    type: "output",
+    content: "These are the upcoming events of the Android club:",
+  },
 ];
 
 export const joinCommandOutput = [
@@ -166,7 +297,10 @@ export const AndroidClubLogo = {
 };
 
 export const StartCommands = [
-  { type: "output", content: "Welcome to Android Club VITC's Terminal Interface" },
+  {
+    type: "output",
+    content: "Welcome to Android Club VITC's Terminal Interface",
+  },
   { type: "output", content: "" },
   { type: "output", content: ">>> Boot sequence initialized..." },
   { type: "output", content: ">>> Environment loaded. Ready for commands." },
@@ -174,6 +308,9 @@ export const StartCommands = [
 ];
 
 export const InvalidCommandOutput = (command) => [
-  { type: "output", content: `'${command}' is not recognized as a valid command.` },
+  {
+    type: "output",
+    content: `'${command}' is not recognized as a valid command.`,
+  },
   { type: "output", content: "Type 'help' for available commands." },
 ];

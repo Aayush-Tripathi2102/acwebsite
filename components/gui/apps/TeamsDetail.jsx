@@ -101,7 +101,7 @@ const teamMembers = [
     description:
       "She turns ideas into visuals and vision into vibe — the one making everything look effortlessly iconic.",
     avatar: "/team/Anushriya.jpg",
-    instagram: "#",
+    instagram: "https://www.instagram.com",
     linkedin: "https://www.linkedin.com/in/anusriya-sridhar/",
   },
   {
@@ -111,7 +111,7 @@ const teamMembers = [
       "The voice that sells the vision — with strategy in mind and confidence in every pitch.",
     avatar: "/team/Vaishnav.jpg",
     instagram: "https://www.instagram.com/vaish.nav_s.p_/",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/vaishnav-s-p-4526a928a",
   },
   {
     name: "Dipyaman Chakraborty",
