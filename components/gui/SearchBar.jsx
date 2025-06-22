@@ -10,7 +10,7 @@ const SearchBar = () => {
   return (
     <motion.div
       layoutId="search-container"
-      className="w-full mx-2 cursor-pointer z-50"
+      className="w-full mx-2 cursor-pointer z-10"
       onClick={() => router.push("/search")}
     >
       <div className="relative w-full">

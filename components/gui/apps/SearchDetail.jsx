@@ -100,7 +100,7 @@ export default function SearchDetail() {
   return (
     <motion.div
       layoutId="search-container"
-      className="min-h-screen backdrop-saturate-150 text-white p-6 sm:p-10"
+      className="h-full  backdrop-saturate-150 text-white p-6 sm:p-10"
     >
       <div className="max-w-xl mx-auto text-center">
         <h1 className="text-3xl font-bold mb-4">Search Applications</h1>
