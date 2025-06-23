@@ -1,6 +1,7 @@
 import React from "react";
 import GestureBackButton from "./GestureBackButton";
 import VantaBackground from "./VantaBackground";
+import StatusBar from "./gui/StatusBar";
 
 const TabletWrapper = ({ children }) => {
   return (
@@ -10,13 +11,13 @@ const TabletWrapper = ({ children }) => {
         <div className="h-full w-full bg-black rounded-[40px] border-[4px] border-black shadow-[inset_0_6px_12px_rgba(0,0,0,0.9)] relative">
           {/* Camera notch - now properly within the bezel */}
 
-          <div className="absolute -top-[7px] left-1/2 transform -translate-x-1/2 z-20">
+          {/* <div className="absolute -top-[7px] left-1/2 transform -translate-x-1/2 z-20">
             <div className="w-20 h-2  rounded-b-lg mx-auto relative -top-[3px]">
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-gray-800 rounded-full flex items-center justify-center">
                 <div className="w-3 h-3 bg-gray-900 rounded-full border border-gray-700"></div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="h-full w-full rounded-[36px] relative overflow-hidden">
             <div
@@ -33,6 +34,7 @@ const TabletWrapper = ({ children }) => {
               style={{ backgroundColor: "rgba(0, 0, 10, 0.7)" }}
             />
             <div className="relative h-full w-full">
+              <StatusBar />
               {children}
               <GestureBackButton />
             </div>
