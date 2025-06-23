@@ -20,7 +20,7 @@ const Terminal = () => {
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-black h-full py-[20px] md:py-[53px] relative overflow-hidden w-2/3 lg:w-full"
+      className="rounded-3xl bg-black h-full cursor-pointer py-[20px] md:py-[53px] relative overflow-hidden w-2/3 lg:w-full"
       onClick={() => router.push("/terminal")}
       whileHover={{ scale: 1.03 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}

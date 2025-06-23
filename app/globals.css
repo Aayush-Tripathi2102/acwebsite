@@ -7,10 +7,6 @@
   font-style: normal;
 }
 
-* {
-  cursor: none;
-}
-
 :root {
   --background: #171717;
   --foreground: #ffffff;

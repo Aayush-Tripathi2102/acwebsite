@@ -16,6 +16,7 @@ import {
 import { PiCellSignalHigh } from "react-icons/pi";
 import { MdDarkMode } from "react-icons/md";
 import dayjs from "dayjs";
+import Image from "next/image";
 
 const StatusBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +61,10 @@ const StatusBar = () => {
 
         <div className="flex gap-1 items-center text-base sm:text-lg leading-none">
           <CiWifiOn />
+          <div>
+            <p className="text-[6px] font-semibold">Vo</p>
+            <p className="text-[6px] font-semibold">LTE</p>
+          </div>
           <PiCellSignalHigh />
           <p className="text-xs">96%</p>
           <CiBatteryFull />
