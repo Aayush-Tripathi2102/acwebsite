@@ -6,7 +6,6 @@ import Terminal from "@/components/terminal/Terminal";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useIsLargeScreen from "@/hooks/useIsLargeScreen"; // import the hook
-import StatusBar from "@/components/gui/StatusBar";
 const currentTime = new Date().toLocaleTimeString([], {
   hour: "2-digit",
   minute: "2-digit",
@@ -14,7 +13,6 @@ const currentTime = new Date().toLocaleTimeString([], {
 export default function Home() {
   return (
     <>
-      <StatusBar />
       <div className="h-full w-full p-2 flex flex-col justify-center overflow-hidden pb-10">
         <div className="grid grid-cols-2 grid-rows-8 lg:grid-cols-5 lg:grid-rows-5 gap-2 w-full h-full">
           {/* Search Bar */}

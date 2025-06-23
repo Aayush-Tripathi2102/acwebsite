@@ -35,14 +35,13 @@ const StatusBar = () => {
       >
         <div className="flex items-center gap-2 leading-none justify-center">
           <span className="ml-2 mt-[2px]">10 : 30</span>
-          <FaWhatsapp className="text-green-400 text-sm sm:text-base" />
-          <FaInstagram className="text-pink-400 text-sm sm:text-base" />
-          <FaBell className="text-yellow-400 text-sm sm:text-base" />
+          <FaBell className="text-white text-sm sm:text-base" />
         </div>
 
-        <div className="flex gap-2 items-center text-base sm:text-lg leading-none">
+        <div className="flex gap-1 items-center text-base sm:text-lg leading-none">
           <CiWifiOn />
           <PiCellSignalHigh />
+          <p className="text-xs">96%</p>
           <CiBatteryFull />
         </div>
       </div>
@@ -66,7 +65,7 @@ const StatusBar = () => {
                 </span>
               </div>
               <div className="text-right">
-                <span className="text-white/60">🔋 Battery: 85%</span>
+                <span className="text-white/60">🔋 Battery: 96%</span>
               </div>
             </div>
 
