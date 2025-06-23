@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CiWifiOn, CiBatteryFull } from "react-icons/ci";
 import { FaVolumeUp } from "react-icons/fa";
@@ -15,16 +15,36 @@ import {
 } from "react-icons/fa6";
 import { PiCellSignalHigh } from "react-icons/pi";
 import { MdDarkMode } from "react-icons/md";
-
-// const getTime = () =>
-//   new Date().toLocaleTimeString([], {
-//     hour: "2-digit",
-//     minute: "2-digit",
-//   });
+import dayjs from "dayjs";
 
 const StatusBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  //   const currentTime = getTime();
+  const [currentTime, setCurrentTime] = useState(() => {
+    const now = new Date();
+    return now.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  });
+  const [currentDate, setCurrentDate] = useState(() =>
+    dayjs().format("MMMM D, YYYY")
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      setCurrentTime(
+        now.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      );
+      setCurrentDate(dayjs().format("MMMM D, YYYY"));
+    }, 1000 * 60);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="relative z-50">
@@ -34,7 +54,7 @@ const StatusBar = () => {
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <div className="flex items-center gap-2 leading-none justify-center">
-          <span className="ml-2 mt-[2px]">10 : 30</span>
+          <span className="ml-2 mt-[2px]">{currentTime}</span>
           <FaBell className="text-white text-sm sm:text-base" />
         </div>
 
@@ -60,9 +80,7 @@ const StatusBar = () => {
             <div className="flex justify-between items-center mb-3">
               <div className="flex flex-col">
                 <span className="text-white/80">🔔 3 New Notifications</span>
-                <span className="text-white/60">
-                  📅 June 21, 2025 | 🌤️ 32°C
-                </span>
+                <span className="text-white/60">{currentDate} | 🌤️ 32°C</span>
               </div>
               <div className="text-right">
                 <span className="text-white/60">🔋 Battery: 96%</span>

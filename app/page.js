@@ -3,7 +3,7 @@
 import AppSection from "@/components/gui/AppSection";
 import SearchBar from "@/components/gui/SearchBar";
 import Terminal from "@/components/terminal/Terminal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useIsLargeScreen from "@/hooks/useIsLargeScreen"; // import the hook
 const currentTime = new Date().toLocaleTimeString([], {
@@ -11,6 +11,42 @@ const currentTime = new Date().toLocaleTimeString([], {
   minute: "2-digit",
 });
 export default function Home() {
+  const [mousePosition, setMousePosition] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [cursorVariant, setCursorVariant] = useState("default");
+
+  useEffect(() => {
+    const mouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", mouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", mouseMove);
+    };
+  }, []);
+
+  const variants = {
+    default: {
+      x: mousePosition.x - 14,
+      y: mousePosition.y - 14,
+    },
+    text: {
+      height: 150,
+      width: 600,
+      x: 350,
+      y: 250,
+    },
+  };
+
+  const textEnter = () => setCursorVariant("text");
+  const textLeave = () => setCursorVariant("default");
   return (
     <>
       <div className="h-full w-full p-2 flex flex-col justify-center overflow-hidden pb-10">
@@ -31,6 +67,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <motion.div
+        className="cursor h-[28px] w-[28px] rounded-full bg-white fixed top-0 left-0 opacity-20 pointer-events-none blur-[1px]"
+        variants={variants}
+        animate={cursorVariant}
+      />
     </>
   );
 }
