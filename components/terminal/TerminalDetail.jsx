@@ -290,19 +290,38 @@ export default function TerminalDetail() {
       {/* Scrollable wrapper for both left and right */}
       <div className="flex w-full h-full overflow-y-auto scrollbar-hide">
         {/* LEFT PANE */}
-        <div className="w-full md:w-2/3 p-4 text-[1px] text-[var(--terminal-primary)]">
-          <div
-            className="terminal-text text-[4px] leading-[5px] my-4 whitespace-pre-wrap break-words"
-            style={{
-              textShadow: `
+        <div className="w-full p-4 text-[1px] text-[var(--terminal-primary)]">
+          <div className="flex items-center sm:justify-center w-full">
+            <div
+              className="terminal-text text-[4px] leading-[5px] my-4 whitespace-pre-wrap break-words"
+              style={{
+                textShadow: `
               0 0 10px var(--terminal-primary),
               0 0 10px var(--terminal-primary),
               0 0 10px var(--terminal-primary),
               0 0 40px var(--terminal-primary)
             `,
-            }}
-          >
-            {AndroidClubLogo.content}
+              }}
+            >
+              {AndroidClubLogo.content}
+            </div>
+            <div className="w-4/6  pl-10 text-[1px] text-[var(--terminal-primary)] hidden lg:block">
+              <pre
+                style={{
+                  textShadow: `
+              0 0 10px var(--terminal-primary),
+              0 0 40px var(--terminal-primary)
+            `,
+                }}
+                className="bg-black text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
+              >
+                {!specs
+                  ? "Fetching system specs..."
+                  : Object.entries(specs)
+                      .map(([key, val]) => `${key}: ${val}\n`)
+                      .join("")}
+              </pre>
+            </div>
           </div>
 
           {visibleStartCommands.map((log, i) => (
@@ -368,23 +387,6 @@ export default function TerminalDetail() {
         </div>
 
         {/* RIGHT PANE */}
-        <div className="w-2/3 p-4 text-[1px] text-[var(--terminal-primary)] hidden lg:block">
-          <pre
-            style={{
-              textShadow: `
-              0 0 10px var(--terminal-primary),
-              0 0 40px var(--terminal-primary)
-            `,
-            }}
-            className="bg-black text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
-          >
-            {!specs
-              ? "Fetching system specs..."
-              : Object.entries(specs)
-                  .map(([key, val]) => `${key}: ${val}\n`)
-                  .join("")}
-          </pre>
-        </div>
       </div>
     </motion.div>
   );

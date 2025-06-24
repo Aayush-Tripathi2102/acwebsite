@@ -23,14 +23,14 @@ const TabletWrapper = ({ children }) => {
             <div
               className="absolute inset-0"
               style={{
-                backgroundImage: "url(/deviceBg.png)", 
+                backgroundImage: "url(/deviceBg.png)",
                 backgroundPosition: "center",
                 filter: "blur(2px)",
               }}
             />
             <div
               className="absolute inset-0"
-              style={{ backgroundColor: "rgba(0, 0, 10, 0.7)" }}
+              style={{ backgroundColor: "rgba(10, 10, 20, 0.7)" }}
             />
             <div className="relative h-full w-full">
               <StatusBar />
