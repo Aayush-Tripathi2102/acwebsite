@@ -68,10 +68,10 @@ const Apps = [
     layoutId: "contributors-page",
   },
   {
-    src: "/gui/TerminalIcon.png",
-    alt: "ADB",
-    href: "/terminal",
-    layoutId: "",
+    src: "/gui/MapIcon.png",
+    alt: "Maps",
+    href: "/map",
+    layoutId: "map-page",
   },
 ];
 
