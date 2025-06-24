@@ -75,7 +75,7 @@ const StatusBar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute left-0 top-6 w-full bg-transparent backdrop-blur-xl px-4 py-4 text-xs sm:text-sm rounded-b-xl shadow-lg z-50 text-white"
+            className="absolute left-0 top-6 w-full bg-black backdrop-blur-xl px-4 py-4 text-xs sm:text-sm rounded-b-xl shadow-lg z-50 text-white "
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -3 }}
