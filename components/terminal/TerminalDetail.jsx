@@ -39,14 +39,16 @@ export default function TerminalDetail() {
       const debugInfo = gl?.getExtension("WEBGL_debug_renderer_info");
 
       const data = {
-        OS: navigator.platform,
-        UserAgent: navigator.userAgent,
-        CPU_Cores: navigator.hardwareConcurrency || "Unknown",
-        RAM_GB: navigator.deviceMemory || "Unknown",
-        Screen: `${screen.width}x${screen.height}`,
-        GPU: debugInfo
-          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-          : "Unknown",
+        OS: "Android 14 (Rooted, obviously)",
+        UserAgent:
+          "Dalvik/2.1.0 (Linux; U; Android 14; Pixel Club Edition Build/ANDROIDCLUB2025)",
+        CPU_Cores: 8,
+        RAM_GB: 12,
+        Screen: "2400x1080 AMOLED (Notch-free, unlike *some*)",
+        GPU: "Adreno 740 (can run Doom and your fridge)",
+        Battery: "96% (because Androids know how to manage power)",
+        ClubAccess: "Verified Android Enthusiast",
+        Note: "iOS tried joining but couldn’t find the back button",
       };
 
       setSpecs(data);
@@ -288,19 +290,38 @@ export default function TerminalDetail() {
       {/* Scrollable wrapper for both left and right */}
       <div className="flex w-full h-full overflow-y-auto scrollbar-hide">
         {/* LEFT PANE */}
-        <div className="w-full md:w-2/3 p-4 text-[1px] text-[var(--terminal-primary)]">
-          <div
-            className="terminal-text text-[4px] leading-[5px] my-4 whitespace-pre-wrap break-words"
-            style={{
-              textShadow: `
+        <div className="w-full p-4 text-[1px] text-[var(--terminal-primary)]">
+          <div className="flex items-center sm:justify-center w-full">
+            <div
+              className="terminal-text text-[4px] leading-[5px] my-4 whitespace-pre-wrap break-words"
+              style={{
+                textShadow: `
               0 0 10px var(--terminal-primary),
               0 0 10px var(--terminal-primary),
               0 0 10px var(--terminal-primary),
               0 0 40px var(--terminal-primary)
             `,
-            }}
-          >
-            {AndroidClubLogo.content}
+              }}
+            >
+              {AndroidClubLogo.content}
+            </div>
+            <div className="w-4/6  pl-10 text-[1px] text-[var(--terminal-primary)] hidden lg:block">
+              <pre
+                style={{
+                  textShadow: `
+              0 0 10px var(--terminal-primary),
+              0 0 40px var(--terminal-primary)
+            `,
+                }}
+                className="bg-black text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
+              >
+                {!specs
+                  ? "Fetching system specs..."
+                  : Object.entries(specs)
+                      .map(([key, val]) => `${key}: ${val}\n`)
+                      .join("")}
+              </pre>
+            </div>
           </div>
 
           {visibleStartCommands.map((log, i) => (
@@ -366,23 +387,6 @@ export default function TerminalDetail() {
         </div>
 
         {/* RIGHT PANE */}
-        <div className="w-1/3 p-4 text-[1px] text-[var(--terminal-primary)] hidden lg:block">
-          <pre
-            style={{
-              textShadow: `
-              0 0 10px var(--terminal-primary),
-              0 0 40px var(--terminal-primary)
-            `,
-            }}
-            className="bg-black text-terminal-primary p-4 rounded-lg text-wrap md:text-[8px] lg:text-xs"
-          >
-            {!specs
-              ? "Fetching system specs..."
-              : Object.entries(specs)
-                  .map(([key, val]) => `${key}: ${val}\n`)
-                  .join("")}
-          </pre>
-        </div>
       </div>
     </motion.div>
   );

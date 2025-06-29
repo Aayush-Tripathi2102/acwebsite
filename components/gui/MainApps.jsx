@@ -6,12 +6,12 @@ const Apps = [
   {
     src: "/gui/InstagramIcon.png",
     alt: "Instagram",
-    href: "https://instagram.com",
+    href: "https://instagram.com/androidvitc",
   },
   {
     src: "/gui/LinkedInIcon.png",
     alt: "LinkedIn",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/company/android-club-vitc/",
   },
   {
     src: "/gui/AboutIcon.png",
@@ -68,10 +68,10 @@ const Apps = [
     layoutId: "contributors-page",
   },
   {
-    src: "/gui/TerminalIcon.png",
-    alt: "ADB",
-    href: "/terminal",
-    layoutId: "",
+    src: "/gui/MapIcon.png",
+    alt: "Maps",
+    href: "/map",
+    layoutId: "map-page",
   },
 ];
 

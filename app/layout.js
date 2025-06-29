@@ -2,6 +2,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import TabletWrapper from "@/components/TabletWrapper";
 import VantaBackground from "@/components/VantaBackground";
+import StatusBar from "@/components/gui/StatusBar";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -15,10 +16,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`font-poppins antialiased`}>
         <VantaBackground />
-        <TabletWrapper>{children}</TabletWrapper>
+        <TabletWrapper> {children}</TabletWrapper>
       </body>
     </html>
   );

@@ -14,14 +14,15 @@ export default function AboutDetail() {
   return (
     <motion.div
       layoutId="about-page"
-      className="absolute inset-0 overflow-y-scroll rounded-[24px] sm:rounded-[36px] p-6 sm:p-10"
+      className="absolute inset-0 bg-gradient-to-br from-[#23243a] via-[#1a1b26] to-[#23243a] overflow-y-scroll rounded-[24px] sm:rounded-[36px] p-6 sm:p-10"
     >
       {/* Blurred/gradient background */}
-      <div className="absolute inset-0 z-0 rounded">
-        <div className="w-full h-full bg-gradient-to-br from-[#23243a] via-[#1a1b26] to-[#23243a]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_40%,rgba(255,255,255,0.08)_0%,transparent_70%)] blur-2xl"></div>
-      </div>
+      {/* <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-[#23243a] via-[#1a1b26] to-[#23243a]"></div>
+      <div className="absolute top-full left-0 w-full h-full bg-gradient-to-br from-[#23243a] via-[#1a1b26] to-[#23243a]"></div>
+      <div className="absolute top-full left-0 bg-[radial-gradient(ellipse_at_60%_40%,rgba(255,255,255,0.08)_0%,transparent_70%)] blur-2xl"></div> */}
 
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_40%,rgba(255,255,255,0.08)_0%,transparent_70%)] blur-2xl" />
+      <div className="absolute top-full left-0 bg-[radial-gradient(ellipse_at_60%_40%,rgba(255,255,255,0.08)_0%,transparent_70%)] blur-2xl" />
       {/* Glassy nav */}
 
       {/* Main glassmorphism card */}

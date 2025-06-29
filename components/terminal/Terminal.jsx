@@ -20,8 +20,10 @@ const Terminal = () => {
   return (
     <motion.div
       layoutId="terminal-card"
-      className="rounded-3xl bg-black h-full py-[20px] md:py-[53px] relative overflow-hidden w-2/3 lg:w-full"
+      className="rounded-3xl bg-black h-full cursor-pointer py-[20px] md:py-[53px] relative overflow-hidden w-2/3 lg:w-full"
       onClick={() => router.push("/terminal")}
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
       <div className="flex flex-wrap relative gap-2 md:gap-5 px-[20px] md:px-[40px]">
         <div className="absolute inset-0 bg-terminal-primary blur-3xl opacity-40"></div>
@@ -81,11 +83,12 @@ const Terminal = () => {
         </pre>
       </div>
 
-      <h1 className="text-terminal-primary terminal-text text-[10px] md:text-[13px] font-[400] px-[23px] mt-[10px] md:mt-[30px]">
+      <h1 className="text-terminal-primary terminal-text text-[10px] md:text-[16px] font-[400] px-[23px] mt-[10px] md:mt-[30px]">
         <Typewriter
           words={[
             "Tap to launch terminal",
             "Access commands here",
+            "No hidden commands here. Promise.",
             "Explore the Android Club",
           ]}
           loop={true}
