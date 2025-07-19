@@ -17,21 +17,21 @@ export default function Page() {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="w-full h-full bg-white overflow-y-auto scrollbar-hide p-10"
+      className="w-full h-full bg-gray-950 overflow-y-auto p-10 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-900"
     >
       <ArrowLeft
         onClick={() => {
           router.push("/past-events/");
         }}
-        className="absolute text-black w-10 h-10 rounded-full hover:bg-gray-100 p-2 cursor-pointer"
+        className="absolute text-gray-100 w-10 h-10 rounded-full hover:bg-gray-800 p-2 cursor-pointer"
       />
-      <h1 className="text-2xl md:text-3xl font-bold text-center text-green-900 mb-8">
+      <h1 className="text-2xl md:text-3xl font-bold text-center text-green-300 mb-8">
         Events - About
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
         {/* Left Card */}
-        <div className="bg-white border flex flex-col justify-between rounded-xl h-auto  relative">
+        <div className="bg-gray-900 border border-gray-800 flex flex-col justify-between rounded-xl h-auto relative">
           <div className="relative rounded-lg overflow-auto">
             <div className="">
               <Image
@@ -50,22 +50,22 @@ export default function Page() {
           </div>
 
           {/* Details */}
-          <div className="mt-4 text-base grid grid-cols-1 2xl:grid-cols-2 gap-y-1 p-4 text-gray-700">
+          <div className="mt-4 text-base grid grid-cols-1 2xl:grid-cols-2 gap-y-1 p-4 text-gray-300">
             <div>
               <p>
-                <span className="font-semibold text-[18px] text-gray-900">
+                <span className="font-semibold text-[18px] text-gray-100">
                   Time:
                 </span>{" "}
                 11:40 - 1 pm
               </p>
               <p>
-                <span className="font-semibold text-[18px] text-gray-900">
+                <span className="font-semibold text-[18px] text-gray-100">
                   Venue:
                 </span>{" "}
                 Netaji Auditorium
               </p>
               <p>
-                <span className="font-semibold text-[18px] text-gray-900">
+                <span className="font-semibold text-[18px] text-gray-100">
                   Winners:
                 </span>{" "}
                 Not Announced
@@ -73,13 +73,13 @@ export default function Page() {
             </div>
             <div>
               <p>
-                <span className="font-semibold text-[18px] text-gray-900">
+                <span className="font-semibold text-[18px] text-gray-100">
                   Student Coordinators:
                 </span>
                 &nbsp;John Wick
               </p>
               <p>
-                <span className="font-semibold text-[18px] text-gray-900">
+                <span className="font-semibold text-[18px] text-gray-100">
                   Participants:
                 </span>{" "}
                 76
@@ -88,8 +88,8 @@ export default function Page() {
           </div>
 
           {/* Rewards */}
-          <div className="mt-4 bg-gray-100  p-4 rounded-lg text-gray-700 ">
-            <p className="font-extrabold text-[30px] mb-2 text-gray-900">
+          <div className="mt-4 bg-gray-800 p-4 rounded-lg text-gray-200 ">
+            <p className="font-extrabold text-[30px] mb-2 text-green-300">
               Rewards
             </p>
             <ul className="text-[20px] list-disc list-inside font-bold">
@@ -101,12 +101,12 @@ export default function Page() {
         </div>
 
         {/* Description Box */}
-        <motion.div className="bg-gray-100 border  rounded-xl h-[600px] overflow-auto p-6 flex flex-col justify-between">
+        <motion.div className="bg-gray-900 border border-gray-800 rounded-xl h-[600px] overflow-auto p-6 flex flex-col justify-between">
           <div>
-            <h2 className="text-3xl font-bold mb-2 text-gray-900">
+            <h2 className="text-3xl font-bold mb-2 text-green-300">
               Description
             </h2>
-            <p className="text-lg text-gray-700 mb-4">
+            <p className="text-lg text-gray-300 mb-4">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Voluptatibus ducimus, est sapiente tempore suscipit magnam, autem
               quis pariatur adipisci, assumenda eligendi non rerum neque eos!
@@ -120,7 +120,7 @@ export default function Page() {
               tenetur quaerat nemo id velit adipisci veniam. Facilis laboriosam
               !
             </p>
-            <p className="text-xs text-gray-600">OD will be Provided</p>
+            <p className="text-xs text-gray-400">OD will be Provided</p>
           </div>
         </motion.div>
       </div>
