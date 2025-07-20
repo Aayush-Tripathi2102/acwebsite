@@ -17,6 +17,10 @@ const designers = [
 
 const developers = [
   {
+    name: "Aayush Tripathi (Team Lead)",
+    github: "Aayush-Tripathi2102",
+  },
+  {
     name: "Vishal Prabhu",
     github: "Vishal-770",
   },
@@ -27,6 +31,18 @@ const developers = [
   {
     name: "Adarsh kumar mishra",
     github: "CodeX-266",
+  },
+  {
+    name: "Srivarshini S",
+    github: "srivarshini-s154",
+  },
+  {
+    name: "Vaishnavi Srivastava",
+    github: "vaishnavi09sri",
+  },
+  {
+    name: "Aishwarya R",
+    github: "AishwaryaR04",
   },
   {
     name: "Divyansha Agarwal",
