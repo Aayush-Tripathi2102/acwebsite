@@ -1,18 +1,43 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { FiSearch } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 const SearchBar = () => {
   const router = useRouter();
+  const hoverAudioRef = useRef(null);
+  const clickAudioRef = useRef(null);
+
+  const playHoverSound = () => {
+    const audio = hoverAudioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  };
+
+  const playClickSoundAndNavigate = (href) => {
+    const audio = clickAudioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+
+    setTimeout(() => {
+      router.push(href);
+    }, 100); // slight delay to let click sound start
+  };
 
   return (
     <motion.div
       layoutId="search-container"
       className="w-full mx-2 cursor-pointer z-10"
-      onClick={() => router.push("/search")}
+      onClick={() => playClickSoundAndNavigate("/search")}
+      onMouseEnter={playHoverSound}
     >
+      <audio ref={hoverAudioRef} src="/sounds/hover.mp3" preload="auto" />
+      <audio ref={clickAudioRef} src="/sounds/appClick.mp3" preload="auto" />
       <div className="relative w-full">
         <motion.div
           layoutId="search-box"

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
@@ -8,8 +8,17 @@ import { Typewriter } from "react-simple-typewriter";
 const Terminal = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const hoverAudioRef = useRef(null);
 
   const isTerminalRoute = pathname === "/terminal";
+
+  const playHoverSound = () => {
+    const audio = hoverAudioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  };
 
   const handleClick = () => {
     if (!isTerminalRoute) {
@@ -21,10 +30,12 @@ const Terminal = () => {
     <motion.div
       layoutId="terminal-card"
       className="rounded-3xl bg-black h-full cursor-pointer py-[20px] md:py-[53px] relative overflow-hidden w-2/3 lg:w-full"
-      onClick={() => router.push("/terminal")}
+      onClick={handleClick}
       whileHover={{ scale: 1.03 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      onMouseEnter={playHoverSound}
     >
+      <audio ref={hoverAudioRef} src="/sounds/hover.mp3" preload="auto" />
       <div className="flex flex-wrap relative gap-2 md:gap-5 px-[20px] md:px-[40px]">
         <div className="absolute inset-0 bg-terminal-primary blur-3xl opacity-40"></div>
         <pre

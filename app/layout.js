@@ -3,6 +3,7 @@ import "./globals.css";
 import TabletWrapper from "@/components/TabletWrapper";
 import VantaBackground from "@/components/VantaBackground";
 import StatusBar from "@/components/gui/StatusBar";
+import BackgroundMusic from "@/components/music/BackgroundMusic";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body className={`font-poppins antialiased`}>
         <VantaBackground />
+        <BackgroundMusic />
         <TabletWrapper> {children}</TabletWrapper>
       </body>
     </html>

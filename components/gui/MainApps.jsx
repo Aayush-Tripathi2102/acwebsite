@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 
 const Apps = [
@@ -77,9 +78,33 @@ const Apps = [
 
 const MainApps = () => {
   const router = useRouter();
+  const hoverAudioRef = useRef(null);
+  const clickAudioRef = useRef(null);
+
+  const playHoverSound = () => {
+    const audio = hoverAudioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  };
+
+  const playClickSoundAndNavigate = (href) => {
+    const audio = clickAudioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+
+    setTimeout(() => {
+      router.push(href);
+    }, 100); // slight delay to let click sound start
+  };
 
   return (
     <div className="w-full h-full p-4 flex flex-col">
+      <audio ref={hoverAudioRef} src="/sounds/hover.mp3" preload="auto" />
+      <audio ref={clickAudioRef} src="/sounds/appClick.mp3" preload="auto" />
       <div className="grid grid-cols-4 gap-2 lg:gap-6 place-items-center w-full grow place-content-evenly">
         {Apps.map((icon, i) => (
           <div
@@ -88,7 +113,8 @@ const MainApps = () => {
               max-w-[64px] sm:max-w-[72px] lg:max-w-[90px] 
               transition-transform duration-200 ease-in-out 
               hover:scale-105 active:scale-95 cursor-pointer rounded-xl"
-            onClick={() => router.push(icon.href)}
+            onMouseEnter={playHoverSound}
+            onClick={() => playClickSoundAndNavigate(icon.href)}
           >
             <motion.img
               src={icon.src}
