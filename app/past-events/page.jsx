@@ -1,77 +1,94 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Calendar, Users, Mail, Home, ArrowLeft } from "lucide-react";
-import EventCard from "@/components/gui/EventCard";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { FetchEventDetails } from "@/utils/service";
 import { useRouter } from "next/navigation";
 
-const PastEvents = () => {
-  const pastEvents = [
-    {
-      id: 1,
-      title: "Event1",
-      date: "March 15, 2024",
-    },
-    {
-      id: 2,
-      title: "Event2",
-      date: "February 28, 2024",
-    },
-    {
-      id: 3,
-      title: "Event3",
-      date: "January 20, 2024",
-    },
-    {
-      id: 4,
-      title: "Event4",
-      date: "January 10, 2024",
-    },
-  ];
+// --- New Skeleton Card Component ---
+const SkeletonCard = () => (
+  <div className="relative pb-[66.66%] rounded-xl overflow-hidden shadow-md bg-gray-800 animate-pulse"></div>
+);
+// --- End New Skeleton Card Component ---
+
+export default function PastEventsPage() {
+  let { data, isLoading } = useQuery({
+    queryKey: ["pastEvents"],
+    queryFn: FetchEventDetails,
+  });
 
   const router = useRouter();
 
+  const handleOpen = (event) => {
+    router.push(`/past-events/${event.event_id}`);
+  };
+
+  // This line is for testing scrollability by duplicating data
+  // In a real application, you'd probably paginate or load more data
+  data = [...(data || []), ...(data || []), ...(data || []), ...(data || [])];
+
+  console.log(data);
+
   return (
-    <motion.div
-      layoutId="past-events-page"
-      className="w-full h-full bg-gray-950 relative overflow-y-auto"
-    >
-      {/* Main Content */}
-      <main className="px-4 md:px-6 pb-8 bg-gray-900 min-h-screen mt-6">
-        <ArrowLeft
-          onClick={() => {
-            router.push("/");
-          }}
-          className="absolute text-gray-100 w-10 h-10 rounded-full hover:bg-gray-800 p-2 cursor-pointer"
-        />
-        <div className="max-w-6xl mx-auto pt-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-green-300 mb-4">
-              Past Events
-            </h2>
-            <p className="text-green-200 text-lg max-w-2xl mx-auto">
-              Explore our collection of successful events that brought together
-              amazing people and created unforgettable experiences.
-            </p>
-          </div>
+    <div className="bg-gray-950 p-6 overflow-y-scroll max-h-screen scrollbar-hide pb-10">
+      <div className="text-center mb-10">
+        <h1 className="text-green-300 text-4xl font-bold">Past Events</h1>
+        <p className="text-green-200 mt-2">
+          Explore our successful events and their highlights.
+        </p>
+      </div>
 
-          {/* Events Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pastEvents.map((event, index) => (
-              <EventCard
-                key={event.id}
-                event={event}
-                index={index}
-                type="pastEvents"
-                // Optionally pass a prop to EventCard to indicate dark mode
-              />
-            ))}
-          </div>
-        </div>
-      </main>
-    </motion.div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {isLoading ? (
+          // --- Loading State: Render Skeleton Cards ---
+          <>
+            {Array.from({ length: 9 }).map(
+              (
+                _,
+                i // Render 9 skeleton cards (adjust as needed)
+              ) => (
+                <SkeletonCard key={i} />
+              )
+            )}
+          </>
+        ) : (
+          // --- Data Loaded: Render Actual Event Cards ---
+          data?.map((event, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+              className="relative pb-[66.66%] rounded-xl overflow-hidden shadow-md cursor-pointer group"
+              onClick={() => handleOpen(event)}
+            >
+              {event.event_images?.[0]?.image_url ? (
+                <Image
+                  src={event.event_images[0].image_url}
+                  alt={event.title || "event image"}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="absolute inset-0 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-700">
+                  <p className="text-gray-400 text-lg">No Image Available</p>
+                </div>
+              )}
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
+
+              <div className="absolute bottom-0 z-20 p-4 text-white">
+                <h2 className="text-xl font-bold">{event.title}</h2>
+                <p className="text-sm text-gray-200">{event.event_date}</p>
+              </div>
+            </motion.div>
+          ))
+        )}
+      </div>
+    </div>
   );
-};
-
-export default PastEvents;
+}
