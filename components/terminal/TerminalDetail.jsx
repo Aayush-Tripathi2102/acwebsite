@@ -11,10 +11,8 @@ import {
   homeLsOutput,
   InvalidCommandOutput,
   projectsCommandOutput,
-  socialCommandOutput,
   StartCommands,
   joinCommandOutput,
-  eventsCommandOutput,
   quotesList,
 } from "@/constants/Terminalconstant";
 import { ProcessTime } from "@/utils/ProcessTime";
@@ -30,6 +28,7 @@ export default function TerminalDetail() {
   const logsEndRef = useRef(null);
   const [pwd, setPwd] = useState("Home");
   const [specs, setSpecs] = useState(null);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     function getSpecs() {
@@ -75,14 +74,11 @@ export default function TerminalDetail() {
     setFocus("command");
   }, [logs, visibleStartCommands, setFocus]);
 
-  const [notification, setNotification] = useState(null);
-
   const executeCommand = (command) => {
-    // Handle echo commands
     if (command.startsWith("notification ")) {
       const msg = command.slice(13);
-      setNotification(msg); // trigger notification
-      setTimeout(() => setNotification(null), 2000); // remove after 2s
+      setNotification(msg);
+      setTimeout(() => setNotification(null), 2000);
       return [{ type: "output", content: msg }];
     }
 
@@ -91,7 +87,6 @@ export default function TerminalDetail() {
       return [{ type: "output", content: msg }];
     }
 
-    // Prevent destructive commands
     if (command.includes("rm -rf")) {
       return [
         {
@@ -102,87 +97,102 @@ export default function TerminalDetail() {
       ];
     }
 
-    // If command starts with "start ", handle project descriptions
     if (command.startsWith("start ")) {
       const projectName = command.slice(6).trim();
       switch (projectName) {
-        case "react app":
-          return [
-            {
-              type: "output",
-              content: "description of React App yet to be added.",
-            },
-          ];
-        case "node.js api":
-          return [
-            {
-              type: "output",
-              content: "description of API yet to be added.",
-            },
-          ];
-        case "next.js website":
-          return [
-            {
-              type: "output",
-              content: "description of website yet to be added.",
-            },
-          ];
+        case "android club website":
+          return [{
+            type: "output",
+            content: `The Android Club Website is your one-stop hub for everything about the club, from learning about our vision and exploring our dynamic team to staying updated on events, workshops, and achievements. It features a rich memory gallery capturing the best moments from our journey so far, giving you a glimpse of our vibrant community. To make things even more exciting, the site includes a linux-inspired terminal, where visitors can type commands and navigate through sections creating a unique and interactive experience.`
+          }];
+        case "wedroid app":
+          return [{
+            type: "output",
+            content: `WeDroid is the ultimate club management app, designed to simplify and streamline the way our members connect and collaborate. From managing announcements and event schedules to tracking tasks and discussions, WeDroid brings the entire club experience to our fingertips.`
+          }];
+        case "hack-n-droid app":
+          return [{
+            type: "output",
+            content: `Hack-n-Droid is a dedicated companion app for hackathon participants, built to enhance their experience during the event. With Hack-n-Droid, participants can enjoy a hassle free onboarding process empowered by amazing features to stay connected throughout the hackathon.`
+          }];
+        case "task ops 3.0 app":
+          return [{
+            type: "output",
+            content: `Task Ops 3.0 is an innovative event management app crafted by the Android Club to power the thrilling Task Ops game. It handles everything from tracking team progress and scores to managing rounds and providing live updates, making the entire event smooth, fair, and engaging for all participants.`
+          }];
+        case "heads up game - tech version":
+          return [{
+            type: "output",
+            content: `Heads Up is a fun and fast-paced guessing game that’s perfect for gatherings or crowd engagement. Just hold the phone to your forehead and guess the word based on your friends’ clues. With multiple categories of words, it’s guaranteed to bring laughs and energy to any group!`
+          }];
+        case "paddle game":
+          return [{
+            type: "output",
+            content: `A classic paddle game built for fun and entertainment. (Description coming soon!)`
+          }];
         default:
           return InvalidCommandOutput(command);
       }
     }
 
-    // Process known commands via a switch-case
     switch (command) {
       case "help":
         return helpCommandOutput;
       case "ls":
-        return pwd === "projects"
-          ? projectsCommandOutput
-          : pwd === "Home"
-          ? homeLsOutput
-          : emptyDir;
+        if (pwd === "Home") {
+          return [
+            { type: "output", content: "[DIR] projects" },
+            ...homeLsOutput.map((item) => ({
+              ...item,
+              content: (
+                <>
+                  [LINK] {item.content}
+                </>
+              ),
+            })),
+          ];
+        } else if (pwd === "projects") {
+          return [
+            { type: "output", content: "Android Club Website" },
+            { type: "output", content: "WeDroid App" },
+            { type: "output", content: "Hack-n-Droid App" },
+            { type: "output", content: "Task Ops 3.0 App" },
+            { type: "output", content: "Heads Up Game - Tech Version" },
+            { type: "output", content: "Paddle Game" },
+          ];
+        } else {
+          return emptyDir;
+        }
       case "cd projects":
         setPwd("projects");
-        return;
+        return [{ type: "output", content: "Moved to /projects/" }];
       case "cd ..":
         setPwd("Home");
-        return;
+        return [{ type: "output", content: "Moved to /Home/" }];
       case "neofetch":
         return [
-          {
-            type: "output",
-            content: `User Agent     : ${navigator.userAgent}`,
-          },
+          { type: "output", content: `User Agent     : ${navigator.userAgent}` },
           { type: "output", content: `Platform       : ${navigator.platform}` },
           { type: "output", content: `Language       : ${navigator.language}` },
-          {
-            type: "output",
-            content: `Online         : ${navigator.onLine ? "Yes" : "No"}`,
-          },
-          {
-            type: "output",
-            content: `Screen Size    : ${window.screen.width}x${window.screen.height}`,
-          },
-          {
-            type: "output",
-            content: `Window Size    : ${window.innerWidth}x${window.innerHeight}`,
-          },
-          {
-            type: "output",
-            content: `Device Memory  : ${navigator.deviceMemory ?? "N/A"} GB`,
-          },
-          {
-            type: "output",
-            content: `CPU Cores      : ${
-              navigator.hardwareConcurrency ?? "N/A"
-            }`,
-          },
+          { type: "output", content: `Online         : ${navigator.onLine ? "Yes" : "No"}` },
+          { type: "output", content: `Screen Size    : ${window.screen.width}x${window.screen.height}` },
+          { type: "output", content: `Window Size    : ${window.innerWidth}x${window.innerHeight}` },
+          { type: "output", content: `Device Memory  : ${navigator.deviceMemory ?? "N/A"} GB` },
+          { type: "output", content: `CPU Cores      : ${navigator.hardwareConcurrency ?? "N/A"}` },
         ];
       case "about":
         return aboutCommandOutput;
       case "social":
-        return socialCommandOutput;
+        return [
+          { type: "output", content: (
+            <span>
+              Our Socials:<br />
+              - <a href="https://github.com/Android-Club-VITC" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400">Github</a><br />
+              - <a href="https://www.linkedin.com/company/android-club-vitc" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400">LinkedIn</a><br />
+              - <a href="https://www.instagram.com/androidvitc/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400">Instagram</a>
+            </span>
+          ) },
+        ];
       case "clear":
       case "cls":
         setLogs([]);
@@ -193,7 +203,7 @@ export default function TerminalDetail() {
       case "date":
         return [{ type: "output", content: new Date().toString() }];
       case "pwd":
-        return [{ type: "output", content: pwd + "/" }];
+        return [{ type: "output", content: `/${pwd}/` }];
       case "history":
         return prevCommands.map((cmd) => ({
           type: "output",
@@ -206,9 +216,15 @@ export default function TerminalDetail() {
         return [{ type: "output", content: quotesList[randomIndex] }];
       case "join":
         return joinCommandOutput;
-      case "events":
-        return eventsCommandOutput;
       default:
+        if (command.startsWith("cd ")) {
+          return [
+            {
+              type: "output",
+              content: `'${command}' is not a directory.`,
+            },
+          ];
+        }
         if (command) {
           return InvalidCommandOutput(command);
         }
@@ -262,11 +278,6 @@ export default function TerminalDetail() {
     }
   };
 
-  const linkMap = {
-    instagram: "https://www.instagram.com/androidvitc/",
-    linkedin: "https://www.linkedin.com/company/android-club-vitc/",
-  };
-
   return (
     <motion.div
       layoutId="terminal-card"
@@ -287,9 +298,7 @@ export default function TerminalDetail() {
         </div>
       )}
 
-      {/* Scrollable wrapper for both left and right */}
       <div className="flex w-full h-full overflow-y-auto scrollbar-hide">
-        {/* LEFT PANE */}
         <div className="w-full p-4 text-[1px] text-[var(--terminal-primary)]">
           <div className="flex items-center sm:justify-center w-full">
             <div
@@ -341,28 +350,7 @@ export default function TerminalDetail() {
               key={i}
               className="terminal-text leading-tight text-[13px] md:text-[17px] whitespace-pre-wrap break-words"
             >
-              {pwd === "Home" &&
-              typeof logs[i - 1]?.content === "string" &&
-              logs[i - 1].content.toLowerCase().includes(">>> ls") &&
-              typeof log.content === "string"
-                ? log.content.split(" ").map((item, index) =>
-                    linkMap[item] ? (
-                      <a
-                        key={index}
-                        href={linkMap[item]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline text-blue-400 hover:text-blue-600 mx-1"
-                      >
-                        {item}
-                      </a>
-                    ) : (
-                      <span key={index} className="mx-1">
-                        {item}
-                      </span>
-                    )
-                  )
-                : log?.content}
+              {typeof log.content === "string" ? log.content : log.content}
             </div>
           ))}
 
@@ -372,7 +360,7 @@ export default function TerminalDetail() {
           >
             <span className="mr-1 text-[13px] md:text-[17px]">{">>>"} </span>
             <span className="text-[13px] md:text-[17px]">
-              {pwd == "Home" ? "/" : pwd + "/"}
+              /{pwd}/
             </span>
             <input
               {...register("command")}
@@ -385,8 +373,6 @@ export default function TerminalDetail() {
 
           <div ref={logsEndRef} />
         </div>
-
-        {/* RIGHT PANE */}
       </div>
     </motion.div>
   );
