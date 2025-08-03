@@ -55,6 +55,10 @@ export default function Lockscreen() {
     }
   };
 
+  useEffect(() => {
+    if (password.length == 4) handlePasswordSubmit();
+  });
+
   const handleKeyPress = (key) => {
     if (isUnlocking) return; // Prevent input during exit animation
 
