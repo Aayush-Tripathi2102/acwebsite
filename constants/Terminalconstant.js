@@ -2,42 +2,19 @@ import Link from "next/link";
 
 export const helpCommandOutput = [
   { type: "output", content: "Available commands:" },
-  { type: "output", content: "  cd - to change present working directory" },
-  {
-    type: "output",
-    content: "  ls - to show the contents of present working directory",
-  },
-  {
-    type: "output",
-    content: "  pwd - to show the present working directory",
-  },
-  {
-    type: "output",
-    content: "  echo - to print string",
-  },
-  {
-    type: "output",
-    content: "  notification - to display notification",
-  },
-  {
-    type: "output",
-    content: "  start - to run any application",
-  },
+  { type: "output", content: "  cd - change present working directory" },
+  { type: "output", content: "  ls - list contents of current directory" },
+  { type: "output", content: "  pwd - print current working directory" },
+  { type: "output", content: "  echo - print string" },
+  { type: "output", content: "  notification - display notification" },
+  { type: "output", content: "  start - run an application" },
   { type: "output", content: "  projects - see our projects" },
   { type: "output", content: "  about    - learn about us" },
   { type: "output", content: "  social   - view our social media" },
   { type: "output", content: "  quote    - get a random programming quote" },
   { type: "output", content: "  join     - how to join our club" },
-  { type: "output", content: "  events   - check upcoming events" },
   { type: "output", content: "  clear    - clear the terminal" },
   { type: "output", content: "  help     - show this help message" },
-];
-
-export const projectsCommandOutput = [
-  { type: "output", content: "Our Projects:" },
-  { type: "output", content: "  - React App" },
-  { type: "output", content: "  - Node.js API" },
-  { type: "output", content: "  - Next.js Website" },
 ];
 
 export const homeLsOutput = [
@@ -177,9 +154,59 @@ export const homeLsOutput = [
   },
 ];
 
-export const emptyDir = [
-  { type: "output", content: "The directory is empty." },
+export const socialCommandOutput = [
+  { type: "output", content: "Our Socials:" },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <a
+          href="https://github.com/Android-Club-VITC"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-blue-400"
+        >
+          Github
+        </a>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <a
+          href="https://www.linkedin.com/company/android-club-vitc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-blue-400"
+        >
+          LinkedIn
+        </a>
+      </span>
+    ),
+  },
+  {
+    type: "output",
+    content: (
+      <span>
+        -{" "}
+        <a
+          href="https://www.instagram.com/androidvitc/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-blue-400"
+        >
+          Instagram
+        </a>
+      </span>
+    ),
+  },
 ];
+
+export const emptyDir = [{ type: "output", content: "The directory is empty." }];
 
 export const aboutCommandOutput = [
   { type: "output", content: "About Us:" },
@@ -196,20 +223,6 @@ export const aboutCommandOutput = [
   {
     type: "output",
     content: "  We believe in continuous learning and improvement.",
-  },
-];
-
-export const socialCommandOutput = [
-  { type: "output", content: "Our Socials:" },
-  { type: "output", content: "  Twitter: @ourteam" },
-  { type: "output", content: "  GitHub: github.com/ourteam" },
-  { type: "output", content: "  LinkedIn: linkedin.com/company/ourteam" },
-];
-
-export const eventsCommandOutput = [
-  {
-    type: "output",
-    content: "These are the upcoming events of the Android club:",
   },
 ];
 
@@ -234,11 +247,9 @@ export const joinCommandOutput = [
     content:
       "3) Develop your skills in whichever department you wish to apply and be ready to showcase them when you're pulled in for an interview.",
   },
-  {
-    type: "output",
-    content: "Keep building , Stay Happy!",
-  },
+  { type: "output", content: "Keep building , Stay Happy!" },
 ];
+;
 
 export const quotesList = [
   "There’s no place like 127.0.0.1. 🏠",
