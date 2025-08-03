@@ -2,6 +2,7 @@ import React from "react";
 import GestureBackButton from "./GestureBackButton";
 import VantaBackground from "./VantaBackground";
 import StatusBar from "./gui/StatusBar";
+import Lockscreen from "./gui/LockScreen";
 
 const TabletWrapper = ({ children }) => {
   return (
@@ -33,6 +34,7 @@ const TabletWrapper = ({ children }) => {
               style={{ backgroundColor: "rgba(10, 10, 20, 0.7)" }}
             />
             <div className="relative h-full w-full">
+              <Lockscreen />
               <StatusBar />
               {children}
               <GestureBackButton />
