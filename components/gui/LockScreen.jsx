@@ -46,7 +46,7 @@ export default function Lockscreen() {
   };
 
   const handlePasswordSubmit = () => {
-    if (password === "1234") {
+    if (password === "2008") {
       setIsUnlocking(true);
     } else {
       setError(true);
