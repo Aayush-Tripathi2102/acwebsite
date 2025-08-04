@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 export default function Lockscreen() {
-  // --- State Management ---
   const [unlockState, setUnlockState] = useState("locked");
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
@@ -11,8 +10,9 @@ export default function Lockscreen() {
   const [error, setError] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [showHint, setShowHint] = useState(false);
 
-  // Effect to unmount the component after the fade-out animation
   useEffect(() => {
     if (isUnlocking) {
       const timer = setTimeout(() => setShouldRender(false), 500);
@@ -20,7 +20,6 @@ export default function Lockscreen() {
     }
   }, [isUnlocking]);
 
-  // Effect for updating time
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -51,24 +50,27 @@ export default function Lockscreen() {
     } else {
       setError(true);
       setPassword("");
+      setFailedAttempts((prev) => {
+        const next = prev + 1;
+        if (next >= 3) setShowHint(true);
+        return next;
+      });
       setTimeout(() => setError(false), 800);
     }
   };
 
   useEffect(() => {
-    if (password.length == 4) handlePasswordSubmit();
+    if (password.length === 4) handlePasswordSubmit();
   });
 
   const handleKeyPress = (key) => {
-    if (isUnlocking) return; // Prevent input during exit animation
+    if (isUnlocking) return;
 
-    // Clear error on new key press
     if (error) setError(false);
 
     if (key === "backspace") {
       setPassword((prev) => prev.slice(0, -1));
     } else if (password.length < 4) {
-      // Set a max password length
       setPassword((prev) => prev + key);
     }
   };
@@ -84,7 +86,7 @@ export default function Lockscreen() {
     >
       <div className="absolute inset-0 bg-black/70"></div>
 
-      {/* View 1: Time, Date, and Initial Prompt */}
+      {/* View 1: Clock & Tap Prompt */}
       <div
         onClick={handleInitialClick}
         className={`absolute inset-0 z-20 flex cursor-pointer flex-col items-center justify-between p-12 text-white transition-transform duration-500 ease-in-out ${
@@ -108,7 +110,7 @@ export default function Lockscreen() {
         </div>
       </div>
 
-      {/* View 2: Password Prompt with Keypad */}
+      {/* View 2: Password Entry */}
       <div
         className={`absolute inset-0 z-10 flex flex-col items-center justify-end md:mb-5 md:justify-center px-4 sm:px-8 py-6 sm:py-12 text-white transition-opacity duration-500 ease-in-out ${
           unlockState === "prompting"
@@ -123,7 +125,12 @@ export default function Lockscreen() {
         >
           <h2 className="text-lg sm:text-xl font-medium">Enter Password</h2>
 
-          {/* Password Display Dots */}
+          {showHint && (
+            <p className="text-sm text-yellow-300">
+              Hint: Think about Android’s launch year.
+            </p>
+          )}
+
           <div className="flex h-6 sm:h-8 items-center justify-center gap-2 sm:gap-3">
             {Array(4)
               .fill(0)
@@ -137,7 +144,6 @@ export default function Lockscreen() {
               ))}
           </div>
 
-          {/* Keypad Grid */}
           <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((digit) => (
               <button
@@ -149,7 +155,6 @@ export default function Lockscreen() {
               </button>
             ))}
 
-            {/* Bottom Row */}
             <button
               onClick={() => handleKeyPress("backspace")}
               className="h-16 w-16 lg:h-20 lg:w-20 rounded-full text-lg sm:text-2xl lg:text-3xl font-light transition-colors hover:bg-white/20 flex items-center justify-center"
