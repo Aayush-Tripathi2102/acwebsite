@@ -91,9 +91,11 @@ export default function Lockscreen() {
           unlockState === "prompting" ? "-translate-y-full" : "translate-y-0"
         }`}
       >
-        <div className="flex flex-col items-center text-center">
-          <h1 className="text-8xl font-bold tracking-tight">{currentTime}</h1>
-          <p className="text-xl font-medium">{currentDate}</p>
+        <div className="flex flex-col items-center text-center mt-5">
+          <h1 className="text-6xl md:text-8xl font-bold tracking-tight">
+            {currentTime}
+          </h1>
+          <p className="text-xl md:text-xl font-medium">{currentDate}</p>
         </div>
         <div className="flex flex-col items-center gap-2 animate-pulse">
           <img
@@ -108,27 +110,27 @@ export default function Lockscreen() {
 
       {/* View 2: Password Prompt with Keypad */}
       <div
-        className={`absolute inset-0 z-10 flex flex-col items-center justify-center p-12 text-white transition-opacity duration-500 ease-in-out ${
+        className={`absolute inset-0 z-10 flex flex-col items-center justify-end md:mb-5 md:justify-center px-4 sm:px-8 py-6 sm:py-12 text-white transition-opacity duration-500 ease-in-out ${
           unlockState === "prompting"
             ? "opacity-100"
             : "opacity-0 pointer-events-none"
         }`}
       >
         <div
-          className={`flex flex-col items-center gap-4 ${
+          className={`flex flex-col items-center gap-6 sm:gap-8 mb-5 ${
             error ? "animate-shake" : ""
           }`}
         >
-          <h2 className="text-xl font-medium">Enter Password</h2>
+          <h2 className="text-lg sm:text-xl font-medium">Enter Password</h2>
 
           {/* Password Display Dots */}
-          <div className="flex h-8 items-center justify-center gap-3">
+          <div className="flex h-6 sm:h-8 items-center justify-center gap-2 sm:gap-3">
             {Array(4)
               .fill(0)
               .map((_, i) => (
                 <div
                   key={i}
-                  className={`h-3 w-3 rounded-full border border-white/50 transition-colors ${
+                  className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full border border-white/50 transition-colors ${
                     password.length > i ? "bg-white/70" : ""
                   }`}
                 ></div>
@@ -136,37 +138,40 @@ export default function Lockscreen() {
           </div>
 
           {/* Keypad Grid */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((digit) => (
               <button
                 key={digit}
                 onClick={() => handleKeyPress(digit)}
-                className="h-20 w-20 rounded-full bg-white/10 text-3xl font-light transition-colors hover:bg-white/20"
+                className="h-16 w-16 lg:h-20 lg:w-20 rounded-full bg-white/10 text-lg sm:text-2xl lg:text-3xl font-light transition-colors hover:bg-white/20"
               >
                 {digit}
               </button>
             ))}
+
             {/* Bottom Row */}
             <button
               onClick={() => handleKeyPress("backspace")}
-              className="h-20 w-20 rounded-full text-3xl font-light transition-colors hover:bg-white/20 flex items-center justify-center"
+              className="h-16 w-16 lg:h-20 lg:w-20 rounded-full text-lg sm:text-2xl lg:text-3xl font-light transition-colors hover:bg-white/20 flex items-center justify-center"
             >
               <img
                 src="/clear.svg"
                 alt="Clear Icon"
-                className="w-8 h-8 opacity-80"
+                className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 opacity-80"
                 style={{ filter: "invert(1) brightness(2)" }}
               />
             </button>
+
             <button
               onClick={() => handleKeyPress("0")}
-              className="h-20 w-20 rounded-full bg-white/10 text-3xl font-light transition-colors hover:bg-white/20"
+              className="h-16 w-16 lg:h-20 lg:w-20 rounded-full bg-white/10 text-lg sm:text-2xl lg:text-3xl font-light transition-colors hover:bg-white/20"
             >
               0
             </button>
+
             <button
               onClick={handlePasswordSubmit}
-              className="h-20 w-20 rounded-full text-xl font-medium text-green-300 transition-colors hover:bg-white/20 flex items-center justify-center"
+              className="h-16 w-16 lg:h-20 lg:w-20 rounded-full text-sm sm:text-base lg:text-xl font-medium text-green-300 transition-colors hover:bg-white/20 flex items-center justify-center"
             >
               OK
             </button>
