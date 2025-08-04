@@ -13,7 +13,7 @@ export default function EventCard({ event, index, type }) {
       onClick={() => {
         type === "pastEvents"
           ? router.push(`/past-events/${event.title}`)
-          : router.push(`/upcomming-events/${event.title}`);
+          : router.push(`/upcomming-events/`);
       }}
       key={index}
       layoutId={event.title}
@@ -27,7 +27,7 @@ export default function EventCard({ event, index, type }) {
     >
       <div className="relative w-full h-full">
         <Image
-          src="/pics/eventCard.png"
+          src={event.image}
           alt="Event"
           fill
           className="object-cover hover:scale-[1.1] transition-all duration-300 ease-in-out hover:brightness-75"

@@ -64,21 +64,21 @@ export default function AboutDetail() {
       <div className="relative z-10 max-w-4xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
           <span className="text-4xl font-bold text-green-400 mb-2 block">
+            100+
+          </span>
+          <span className="text-white/80 font-medium">Events</span>
+        </div>
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
+          <span className="text-4xl font-bold text-green-400 mb-2 block">
+            2000+
+          </span>
+          <span className="text-white/80 font-medium">Participants</span>
+        </div>
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
+          <span className="text-4xl font-bold text-green-400 mb-2 block">
             50+
           </span>
           <span className="text-white/80 font-medium">Projects</span>
-        </div>
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
-          <span className="text-4xl font-bold text-green-400 mb-2 block">
-            20+
-          </span>
-          <span className="text-white/80 font-medium">Competitions</span>
-        </div>
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center shadow">
-          <span className="text-4xl font-bold text-green-400 mb-2 block">
-            30+
-          </span>
-          <span className="text-white/80 font-medium">Winners</span>
         </div>
       </div>
 

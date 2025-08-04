@@ -44,18 +44,13 @@ export default function PastEventsPage() {
         {isLoading ? (
           // --- Loading State: Render Skeleton Cards ---
           <>
-            {Array.from({ length: 9 }).map(
-              (
-                _,
-                i // Render 9 skeleton cards (adjust as needed)
-              ) => (
-                <SkeletonCard key={i} />
-              )
-            )}
+            {Array.from({ length: 9 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
           </>
         ) : (
           // --- Data Loaded: Render Actual Event Cards ---
-          data?.map((event, i) => (
+          data?.slice(0, 2).map((event, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}

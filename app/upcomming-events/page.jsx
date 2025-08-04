@@ -8,23 +8,15 @@ const UpcommingEvents = () => {
   const newEvents = [
     {
       id: 1,
-      title: "Event1",
-      date: "March 15, 2024",
+      title: "ClubCon",
+      date: "Aug 6th, 2025",
+      image: "/ue1.jpeg",
     },
     {
       id: 2,
-      title: "Event2",
-      date: "February 28, 2024",
-    },
-    {
-      id: 3,
-      title: "Event3",
-      date: "January 20, 2024",
-    },
-    {
-      id: 4,
-      title: "Event4",
-      date: "January 10, 2024",
+      title: "Echoes of the Past",
+      date: "Aug 6th, 2025",
+      image: "/past1.jpeg",
     },
   ];
 
@@ -36,12 +28,12 @@ const UpcommingEvents = () => {
     >
       {/* Main Content */}
       <main className="px-4 md:px-6 pb-8 bg-gray-900 min-h-screen mt-6">
-        <ArrowLeft
+        {/* <ArrowLeft
           onClick={() => {
             router.push("/");
           }}
           className="absolute text-gray-100 w-10 h-10 rounded-full hover:bg-gray-800 p-2 cursor-pointer"
-        />
+        /> */}
         <div className="max-w-6xl mx-auto pt-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-green-300 mb-4">
